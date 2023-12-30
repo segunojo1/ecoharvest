@@ -7,6 +7,7 @@ import google from "../assets/google.svg";
 import apple from "../assets/apple.svg";
 import Header from '../components/Header';
 import { auth } from '../firebase';
+import { toast } from 'react-toastify';
 
 const Login = () => {
     const [loading, setLoading] = useState(false);
@@ -32,12 +33,14 @@ const Login = () => {
             const {accessToken, refreshToken} = user.stsTokenManager;
             Cookies.set('accessToken', accessToken);
             Cookies.set('refreshToken', refreshToken);
+            toast.success("Logged in successfully!")
             navigate('/');
           })
           .catch((error: any) => {
             setLoading(false);
             const errorCode = error.code;
             const errorMessage = error.message;
+            toast.error(errorMessage)
             // console.log(errorMessage, errorCode);
             setError(errorMessage)
           });
@@ -58,7 +61,6 @@ const Login = () => {
         <div className="flex h-[100vh] items-center justify-center">
           <div className="flex flex-col w-[400px] m-auto p-[2rem]">
             <h1 className="h1">Login to your account</h1>
-            <h1 className={error !== '' ? "err" : "hi"}>{error}</h1>
             {/* <h1 className={resp !== '' ? "resp" : "hi"}>{resp}</h1> */}
              <form action="">
               <div>

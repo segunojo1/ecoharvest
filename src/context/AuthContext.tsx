@@ -8,6 +8,8 @@ export const AuthProvider = ({children}: any) => {
     const [email, setEmail] = useState();
     const [error, setError] = useState();
 
+    const [authUser, setAuthUser] = useState({});
+
     const [password, setPassword] = useState();
 
     const isAuthenticated = () => {
@@ -20,7 +22,9 @@ export const AuthProvider = ({children}: any) => {
         setPassword,
         error,
         setError,
-        isAuthenticated
+        isAuthenticated,
+        authUser,
+        setAuthUser
     }
   return (
     <AuthContext.Provider value={authStates}>

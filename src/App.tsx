@@ -9,6 +9,9 @@ import Dashboard from './pages/Dashboard'
 import PrivateRoute from './PrivateRoute'
 import SignUp from './pages/SignUp'
 import Sidebar from './components/Sidebar'
+import { ToastContainer } from 'react-toastify'
+import Weather from './pages/Weather'
+import Page404 from './pages/Page404'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -26,6 +29,22 @@ function App() {
               </div>
             </PrivateRoute>
           } />
+          <Route path='/weather'  element={
+            <PrivateRoute>
+              <div className="dashboard">
+                <Sidebar />
+                <Weather />
+              </div>
+            </PrivateRoute>
+          } />
+          <Route path='/market'  element={
+            <PrivateRoute>
+              <div className="dashboard">
+                <Sidebar />
+                <Dashboard />
+              </div>
+            </PrivateRoute>
+          } />
 
 <Route path='/'  element={
             <PrivateRoute>
@@ -35,6 +54,8 @@ function App() {
               </div>
             </PrivateRoute>
           } />
+          <Route path='*' element={<Page404 />}/>
+          
         </Routes>
       </BrowserRouter>
     </>

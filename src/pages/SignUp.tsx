@@ -8,6 +8,7 @@ import apple from "../assets/apple.svg";
 import { auth } from '../firebase';
 import { useNavigate } from "react-router-dom"
 import Cookies from "js-cookie"
+import { toast } from 'react-toastify';
 
 const SignUp = () => {
         const [loading, setLoading] = useState(false);
@@ -32,12 +33,14 @@ const SignUp = () => {
                 const {accessToken, refreshToken} = user.stsTokenManager;
                 Cookies.set('accessToken', accessToken);
                 Cookies.set('refreshToken', refreshToken);
+                toast.success("Account created successfully!")
                 navigate('/');
                 })
                 .catch((error:any) => {
                         setLoading(false);
                         const errorCode = error.code;
                         const errorMessage = error.message;
+                        toast.error(errorMessage)
                         console.log(errorCode, errorMessage);
                         setError(errorMessage);
                 });
@@ -58,7 +61,6 @@ const SignUp = () => {
                   <div className="flex h-[100vh] items-center justify-center">
                   <div className="flex flex-col w-[400px] m-auto p-[2rem] bg-[#fff]">
                     <h1 className="h1">Create an account</h1>
-                    <h1 className={error !== '' ? "err" : "hi"}>{error}</h1>
                      <form action="">
                       <div>
                        <label htmlFor="email"> Email address </label>

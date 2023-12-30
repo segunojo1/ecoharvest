@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@300;400&family=Space+Grotesk:wght@500&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 body{
     transition: ease-in-out 2s;
-    font-family: "Raleway", sans-serif;
+    font-family: "Poppins", sans-serif;
 }
 .image-item {
   /* Adjust the styles for grid items */
@@ -351,13 +351,12 @@ form div {
 
 .dashboard{
     background-color: #fff;
-    display: flex;
     width: 100%;
 }
 
 .dashside{
     padding: 1rem;
-    position: relative;
+    position: fixed;
     flex: .2;
 }
 .dashside .line{
@@ -413,7 +412,8 @@ form div {
 }
 
 .active{
-    background-color: #D24A46;    
+    background-color: #80dd70;    
+    border-radius: 5px;
 }
 .showw{
     display: flex;
@@ -422,4 +422,24 @@ form div {
 }
 .rot{
     transform: rotate(180deg);
+}
+.weatherr{
+    background-image: url('./assets/pexels-pixabay-209831.jpg');
+    background-size: cover;
+    
+}
+.market{
+    background-image: url('./assets/pexels-pedram-ahmadian-2686820.jpg');
+    background-size: cover;
+    box-shadow: rgba(0, 0, 0, 0.584) 0px -105px 36px -28px inset;
+}
+.market:hover, .weatherr:hover{
+    box-shadow: rgba(79, 79, 85, 0.2) 0px 7px 29px 0px;
+}
+/* .market h2{
+    text-shadow: 6px 6px 3px rgb(130, 223, 17);
+} */
+.weath{
+    /* background-image: url('./assets/pexels-pixabay-209831.jpg'); */
+    background-size: cover;
 }
