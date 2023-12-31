@@ -1,8 +1,47 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import weath from "../assets/pexels-pixabay-209831.jpg"
 import WeatherDetails from './WeatherDetails'
+import weather from '../http/weather'
+import agroweather from '../http/agroweather'
 
 const WeatherMain = () => {
+    let latitude: number;
+    let longitude: number;
+    useEffect(() => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            console.log("Geolocation is not supported by this browser.");
+        }
+        
+        function showPosition(position: any) {
+            latitude = position.coords.latitude;
+            longitude = position.coords.longitude;
+
+            getWeatherDetails();
+            // Now you can use these coordinates to call the OpenWeatherMap API.
+        }
+
+
+        const getWeatherDetails = async () => {
+            try {
+                const weatherr = await agroweather.get("/weather", {
+                    params: {
+                        lat: latitude,
+                        lon: longitude
+                    }
+                })
+                console.log(weatherr);
+                
+            } catch (error) {
+                console.error('err',error);
+                
+            }
+        }
+        
+    }, [])
+
+    
     return (
         <div className='p-[1.4rem] flex gap-5'>
             <div className='gap-[1rem] grid flex-[.6]'>
