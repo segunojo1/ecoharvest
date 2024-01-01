@@ -22,20 +22,16 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
           <Route path='/dashboard'  element={
-            <PrivateRoute>
               <div className="dashboard">
                 <Sidebar />
                 <Dashboard />
               </div>
-            </PrivateRoute>
           } />
           <Route path='/weather'  element={
-            <PrivateRoute>
               <div className="dashboard">
                 <Sidebar />
                 <Weather />
               </div>
-            </PrivateRoute>
           } />
           <Route path='/market'  element={
             <PrivateRoute>

@@ -44,7 +44,7 @@ const WeatherMain = () => {
     
     return (
         <div className='p-[1.4rem] flex gap-5'>
-            <div className='gap-[1rem] grid flex-[.6]'>
+            {/* <div className='gap-[1rem] grid flex-[.6]'>
                 <div className='flex justify-between'>
                     <div className='flex flex-col justify-between'>
                         <div>
@@ -125,6 +125,13 @@ const WeatherMain = () => {
                         </div>
                     </div>
                 </div>
+            </div> */}
+
+            <div className=''>
+
+            </div>
+            <div clas>
+                
             </div>
         </div>
     )
