@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -12,9 +12,15 @@ import Sidebar from './components/Sidebar'
 import { ToastContainer } from 'react-toastify'
 import Weather from './pages/Weather'
 import Page404 from './pages/Page404'
+import NavContext, { NavProvider } from './context/NavContext'
+import { nav } from './@types'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const {activeNav, setActiveNav}:any= useContext(NavContext);
+  const showSidebar = (e:any) => {
+    e.target.classList.toggle("activenav")
+    setActiveNav((prev:any) => !prev);
+  }
   return (
     <>
       <BrowserRouter>
@@ -22,10 +28,13 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
           <Route path='/dashboard'  element={
+            <NavProvider>
               <div className="dashboard">
                 <Sidebar />
+                <div className='ham' onClick={(e) => showSidebar(e)}></div>
                 <Dashboard />
               </div>
+            </NavProvider>
           } />
           <Route path='/weather'  element={
               <div className="dashboard">

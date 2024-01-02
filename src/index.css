@@ -10,7 +10,7 @@ body{
   /* Adjust the styles for grid items */
   background-color: #f0f0f0;
   padding: 16px;
-  border: 1px solid #ccc;
+  border: 1px solid #f7c040;
 }
 #preloader {
         position: fixed;
@@ -120,6 +120,7 @@ input{
   border-radius: 4px;
   outline: none;
   border: 1px solid #E6E6E6;
+  box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
 }
 input:focus{
   border: 1px solid rgb(23, 240, 23)
@@ -442,4 +443,29 @@ form div {
 .weath{
     /* background-image: url('./assets/pexels-pixabay-209831.jpg'); */
     background-size: cover;
+}
+.current-weather, .weath{
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+}
+.ham{
+    width: 40px;
+    height: 5px;
+    background-color: #000;
+    position: absolute;
+    content: "";
+    margin-left: 20px;
+    margin-top: 20px;
+}
+.ham::before{
+    position: relative;
+    transform: rotate(90deg);
+    width: 40px;
+    height: 5px;
+    background-color: red;
+}
+.ham::after{
+    transform: translateY(-50%);
+    width: 40px;
+    height: 5px;
+    background-color: red;
 }

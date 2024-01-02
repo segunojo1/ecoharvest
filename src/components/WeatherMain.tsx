@@ -3,6 +3,19 @@ import weath from "../assets/pexels-pixabay-209831.jpg"
 import WeatherDetails from './WeatherDetails'
 import weather from '../http/weather'
 import agroweather from '../http/agroweather'
+import location from "../assets/location.svg"
+import calender from "../assets/date.svg"
+import location2 from "../assets/location2.svg"
+import sun from "../assets/sun.svg"
+import cloud2 from "../assets/cloud2.svg"
+import wind from '../assets/wind.svg'
+import sunset from "../assets/sunrise.svg"
+import sunrise from "../assets/moon.svg"
+import drop from "../assets/drop.svg"
+import pressure from "../assets/pressure.svg"
+import eye from "../assets/eye.svg"
+import temp from "../assets/temp.svg"
+
 
 const WeatherMain = () => {
     let latitude: number;
@@ -13,7 +26,7 @@ const WeatherMain = () => {
         } else {
             console.log("Geolocation is not supported by this browser.");
         }
-        
+
         function showPosition(position: any) {
             latitude = position.coords.latitude;
             longitude = position.coords.longitude;
@@ -32,106 +45,191 @@ const WeatherMain = () => {
                     }
                 })
                 console.log(weatherr);
-                
+
             } catch (error) {
-                console.error('err',error);
-                
+                console.error('err', error);
+
             }
         }
-        
+
     }, [])
 
-    
+
     return (
-        <div className='p-[1.4rem] flex gap-5'>
-            {/* <div className='gap-[1rem] grid flex-[.6]'>
-                <div className='flex justify-between'>
-                    <div className='flex flex-col justify-between'>
-                        <div>
-                            <h2 className='text-3xl'>EcoHarvest</h2>
-                            <p>Chance of rain: 0%</p>
-                        </div>
-                        <h2 className='mt-[2rem] text-2xl'>32*C</h2>
-                    </div>
-                    <img src={weath} alt="" className='w-[150px] h-[150px] rounded-lg' />
-                </div>
+        <div className='p-[1.4rem] gap-5'>
 
-                <div className='grid grid-cols-2 gap-5'>
-                    <WeatherDetails img="" title="UV Index" value="3" />
-                    <WeatherDetails img="" title="Wind speed" value="3" />
-                    <WeatherDetails img="" title="Humidity" value="3" />
-                    <WeatherDetails img="" title="Visibility" value="3" />
-                    <WeatherDetails img="" title="Feels like" value="3" />
-                    <WeatherDetails img="" title="Chance of rain" value="3" />
-                    <WeatherDetails img="" title="Pressure" value="3" />
-                    <WeatherDetails img="" title="Sunset" value="3" />
+            <div className='flex items-center justify-between w-full mb-5 gap-3'>
+                <h1 className='text-2xl font-bold md:block hidden'>EcoHarvest</h1>
+                <input type="text" className='md:min-w-[500px] md:w-fit w-full rounded-full p-4' placeholder='Search a city' />
+                <div className='p-4 bg-[#446544] w-fit rounded-full flex items-center gap-3'>
+                    <img src={location} alt="location" />
+                    <p className='w-fit font-bold md:block hidden'>Current Location</p>
                 </div>
             </div>
 
-            <div className='flex-[.4] gap-5 flex flex-col'>
-                <div className='bg-[#c4c2c2] p-4 rounded-lg'>
-                    <p className='text-lg font-bold'>Today's Crop Forecast</p>
-                    <div className='flex justify-between'>
-                        <div className='flex flex-col items-center gap-2'>
-                            <p>6:00 AM</p>
-                            <div className='w-[50px] h-[50px] bg-black'></div>
-                            <p>25A*C</p>
+            <div className='flex md:flex-row flex-col justify-between'>
+                <div>
+                    <div className='current-weather drop-shadow-2xl flex flex-col gap-3 p-8 rounded-2xl bg-white'>
+                        <p className='text-xl font-medium'>Now</p>
+                        <div className='flex items-center gap-1'>
+                            <h1 className='text-6xl font-semibold'>14*c</h1>
+                            <img src={sun} alt="" className='px-6' />
                         </div>
-                        <div className='flex flex-col gap-2'>
-                            <p>9:00 AM</p>
-                            <div className='w-[50px] h-[50px] bg-black'></div>
-                            <p>25A*C</p>
+                        <p className='text-xl'>Clear sky</p>
+                        <div className='line my-2'></div>
+                        <div className='flex gap-2 items-center'>
+                            <img src={calender} alt="calender" />
+                            <p className='font-normal text-xl'>Tuesday, 2 Jan</p>
                         </div>
-                        <div className='flex flex-col gap-2'>
-                            <p>12:00 PM</p>
-                            <div className='w-[50px] h-[50px] bg-black'></div>
-                            <p>25A*C</p>
+                        <div className='flex gap-2 items-center'>
+                            <img src={location2} alt="location" />
+                            <p className='font-normal text-xl'>Lagos, Nigeria</p>
                         </div>
+                    </div>
+                    <p className=' font-semibold text-lg my-6'>5 Days Forecast</p>
+                    <div className='current-weather drop-shadow-2xl flex flex-col gap-3 p-10 rounded-2xl bg-white'>
+                        <div className='flex justify-between items-center'>
+                            <div className='flex items-center'>
+                                <img src={cloud2} alt="cloudy" />
+                                <p className='text-xl font-semibold'>18*</p>
+                            </div>
+                            <p>2 Jan</p>
+                            <p>Tuesday</p>
+                        </div>
+                        <div className='flex justify-between items-center'>
+                            <div className='flex items-center'>
+                                <img src={cloud2} alt="cloudy" />
+                                <p className='text-xl font-semibold'>18*</p>
+                            </div>
+                            <p>2 Jan</p>
+                            <p>Tuesday</p>
+                        </div>
+                        <div className='flex justify-between items-center'>
+                            <div className='flex items-center'>
+                                <img src={cloud2} alt="cloudy" />
+                                <p className='text-xl font-semibold'>18*</p>
+                            </div>
+                            <p>2 Jan</p>
+                            <p>Tuesday</p>
+                        </div>
+                        <div className='flex justify-between items-center'>
+                            <div className='flex items-center'>
+                                <img src={cloud2} alt="cloudy" />
+                                <p className='text-xl font-semibold'>18*</p>
+                            </div>
+                            <p>2 Jan</p>
+                            <p>Tuesday</p>
+                        </div>
+                        <div className='flex justify-between items-center'>
+                            <div className='flex items-center'>
+                                <img src={cloud2} alt="cloudy" />
+                                <p className='text-xl font-semibold'>18*</p>
+                            </div>
+                            <p>2 Jan</p>
+                            <p>Tuesday</p>
+                        </div>
+
                     </div>
                 </div>
 
-                <div className='bg-[#c4c2c2] p-4 rounded-lg'>
-                    <p className=' text-lg font-bold'>7-day Forecast</p>
-                    <div className='flex flex-col gap-5'>
-                        <div className='flex gap-2 items-center justify-between'>
-                            <p className=' w-16'>Today's</p>
-                            <div className='w-[50px] h-[50px] bg-black'></div>
-                            <p>25A*C</p>
+
+                <div>
+                    <div className='current-weather drop-shadow-2xl flex flex-col gap-3 p-8 rounded-2xl bg-white'>
+                        <p>Today's Highlights</p>
+                        <div className='flex md:flex-row flex-col gap-4'>
+
+                            <div className='bg-[#eee8e0] p-6 flex-[.5] rounded-md'>
+                                <div className='flex items-center justify-between mb-5'>
+                                    <p>Air Quality Index</p>
+                                    <div className='p-2 bg-[#f1cfa2] w-fit rounded-full'>Moderate</div>
+                                </div>
+                                <div className='flex justify-between items-center gap-4'>
+                                    <img src={wind} alt="" />
+                                    <div className='flex flex-col items-center'>
+                                        <p className='text-xs text-[#5e5d5d]'>PM25</p>
+                                        <p className=' text-xl'>15.3</p>
+                                    </div>
+                                    <div className='flex flex-col items-center'>
+                                        <p className='text-xs text-[#5e5d5d]'>SO2</p>
+                                        <p className=' text-xl'>15.3</p>
+                                    </div>
+                                    <div className='flex flex-col items-center'>
+                                        <p className='text-xs text-[#5e5d5d]'>NO2</p>
+                                        <p className=' text-xl'>15.3</p>
+                                    </div>
+                                    <div className='flex flex-col items-center'>
+                                        <p className='text-xs text-[#5e5d5d]'>O3</p>
+                                        <p className=' text-xl'>15.3</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className='bg-[#eee8e0] p-6 w-full flex-[.5] rounded-md'>
+                                <p className='mb-5'>Sunrise & Sunset</p>
+                                <div className='flex justify-between items-center gap-8'>
+                                    <div className='flex gap-3'>
+
+                                    <img src={sunset} alt="" />
+                                    <div className=''>
+                                        <p>Sunrise</p>
+                                        <p className=' text-lg'>6:41 AM</p>
+                                    </div>
+                                    </div>
+                                    <div className='flex gap-3'>
+
+                                    <img src={sunrise} alt="" />
+                                    <div>
+                                        <p>Sunset</p>
+                                        <p className=' text-lg'>6:00 PM</p>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div className='flex gap-2 items-center justify-between'>
-                            <p className=' w-16'>Tue</p>
-                            <div className='w-[50px] h-[50px] bg-black'></div>
-                            <p>25A*C</p>
+                        <div className='flex md:flex-row flex-col justify-between gap-2'>
+                            <div className='bg-[#eee8e0] p-4 rounded-md'>
+                                <p className='mb-5'>Humidity</p>
+                                <div className='flex justify-between items-center gap-8'>
+                                    <img src={drop} alt="" />
+                                    <p className='text-xl'>54%</p>
+                                </div>
+                            </div>
+                            <div className='bg-[#eee8e0] p-4 rounded-md'>
+                                <p className='mb-5'>Pressure</p>
+                                <div className='flex justify-between items-center gap-8'>
+                                    <img src={pressure} alt="" />
+                                    <p className='text-xl'>1011hPa</p>
+                                </div>
+                            </div>
+                            <div className='bg-[#eee8e0] p-4 rounded-md'>
+                                <p className='mb-5'>Visibility</p>
+                                <div className='flex justify-between items-center gap-8'>
+                                    <img src={eye} alt="" />
+                                    <p className='text-xl'>10km</p>
+                                </div>
+                            </div>
+                            <div className='bg-[#eee8e0] p-4 rounded-md'>
+                                <p className='mb-5'>Feels Like</p>
+                                <div className='flex justify-between items-center gap-8'>
+                                    <img src={temp} alt="" />
+                                    <p className='text-xl'>2*c</p>
+                                </div>
+                            </div>
                         </div>
-                        <div className='flex gap-2 items-center justify-between'>
-                            <p className=' w-16'>Wed</p>
-                            <div className='w-[50px] h-[50px] bg-black'></div>
-                            <p>25A*C</p>
-                        </div>
-                        <div className='flex gap-2 items-center justify-between'>
-                            <p className=' w-16'>Thu</p>
-                            <div className='w-[50px] h-[50px] bg-black'></div>
-                            <p>25A*C</p>
-                        </div>
-                        <div className='flex gap-2 items-center justify-between'>
-                            <p className=' w-16'>Fri</p>
-                            <div className='w-[50px] h-[50px] bg-black'></div>
-                            <p>25A*C</p>
-                        </div>
-                        <div className='flex gap-2 items-center justify-between'>
-                            <p className=' w-16'>Sat</p>
-                            <div className='w-[50px] h-[50px] bg-black'></div>
-                            <p>25A*C</p>
-                        </div>
+
+                    </div>
+                    <p className=' font-semibold text-lg my-6'>Today at</p>
+                    <div className='grid grid-cols-3 gap-2 justify-between'>
+                        <WeatherDetails time= "9PM" img={cloud2} temp="9*"/>
+                        <WeatherDetails time= "9PM" img={cloud2} temp="9*"/>
+                        <WeatherDetails time= "9PM" img={cloud2} temp="9*"/>
+                        <WeatherDetails time= "9PM" img={cloud2} temp="9*"/>
+                        <WeatherDetails time= "9PM" img={cloud2} temp="9*"/>
+                        <WeatherDetails time= "9PM" img={cloud2} temp="9*"/>
+                        <WeatherDetails time= "9PM" img={cloud2} temp="9*"/>
+                        <WeatherDetails time= "9PM" img={cloud2} temp="9*"/>
                     </div>
                 </div>
-            </div> */}
-
-            <div className=''>
-
-            </div>
-            <div clas>
-                
             </div>
         </div>
     )

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import logo from "../assets/logo.png"
 import dash from "../assets/dashboard.svg"
 import dropdown from "../assets/dropdown.svg"
@@ -11,9 +11,11 @@ import goals from "../assets/goals.png"
 import ai from "../assets/chat.svg"
 import { Link, useParams } from 'react-router-dom'
 import SideComp from './SideComp'
+import NavContext from '../context/NavContext'
 
 const Sidebar = () => {
     const [activeComponent, setActiveComponent] = useState('dashboard');
+    const {activeNav, setActiveNav}:any = useContext(NavContext);
     const handleClick = (comp: string) => {
         if (activeComponent == comp) {
             setActiveComponent('')
@@ -23,7 +25,7 @@ const Sidebar = () => {
         console.log("click11");
     }
     return (
-        <div className="dashside">
+        <div className={`dashside ${activeNav ? 'block' : 'hidden'} md:block`}>
             <img src={logo} alt="logo" className='w-[180px]' />
 
             <div className="goals">

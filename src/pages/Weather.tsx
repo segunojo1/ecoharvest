@@ -4,7 +4,7 @@ import WeatherMain from '../components/WeatherMain'
 
 const Weather = () => {
   return (
-    <div className='flex-[.8] ml-[234px]'>
+    <div className='flex-[.8] md:ml-[234px] ml-0 bg-[#e8e4dd]'>
         <Navbar />
         <WeatherMain />
       </div>

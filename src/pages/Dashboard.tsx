@@ -28,7 +28,7 @@ useEffect(() => {
     }
 }, [])
   return (
-      <div className='flex-[.8] ml-[234px]'>
+      <div className='flex-[.8] md:ml-[234px] ml-0'>
         <Navbar />
         <MainComp/>
       </div>
