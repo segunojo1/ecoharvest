@@ -1,14 +1,17 @@
 import haze from "../assets/cloudfog.svg"
+import cloud from "../assets/cloud2.svg"
+import rain from "../assets/rainsmall.svg"
+import sun from "../assets/sunsmall.svg"
 
 export function displayWeatherIcon(description: string): string {
-    const lowerDescription = description;
+    const lowerDescription = description.toLowerCase();
 
     if (lowerDescription.includes('clear')) {
-        return '☀️'; // Sunny
-    } else if (lowerDescription.includes('cloud')) {
-        return '☁️'; // Cloudy
+        return sun; // Sunny
+    } else if (lowerDescription.includes('clouds')) {
+        return cloud; // Cloudy
     } else if (lowerDescription.includes('rain')) {
-        return '🌧️'; // Rain
+        return rain; // Rain
     } else if (lowerDescription.includes('thunderstorm')) {
         return '⛈️'; // Thunderstorm
     } else if (lowerDescription.includes('snow')) {

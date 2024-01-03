@@ -19,6 +19,8 @@ import rain from "../assets/rain.svg"
 import { convertUtcToNormalDate } from '../helpers/convertutc'
 import { displayWeatherIcon } from '../helpers/displayicon'
 import { weatherDetails } from '../@types'
+import { convertToCelsius } from '../helpers/converttocelsius'
+import { getTime } from '../helpers/gettime'
 
 
 const WeatherMain = () => {
@@ -42,6 +44,7 @@ const WeatherMain = () => {
     const [location, setLocation]:any = useState();
     const [icon, setIcon]:any = useState();
     const [loading, setLoading] = useState();
+    const [forecast, setForecast]:any = useState([]);
     let latitude: number;
     let longitude: number;
     useEffect(() => {
@@ -68,18 +71,27 @@ const WeatherMain = () => {
                         lon: longitude
                     }
                 })
-                const geo = await weather.get("/geo/1.0/reverse", {
-                    params: {
-                        lat: latitude,
-                        lon: longitude
-                    }
-                })
-                const weath = await weather.get("/data/2.5/weather", {
-                    params: {
-                        lat: latitude,
-                        lon: longitude
-                    }
-                })
+                const [geo, weath, forecastt] = await Promise.all([
+                    weather.get("/geo/1.0/reverse", {
+                        params: {
+                            lat: latitude,
+                            lon: longitude
+                        }
+                    }),
+                    weather.get("/data/2.5/weather", {
+                        params: {
+                            lat: latitude,
+                            lon: longitude
+                        }
+                    }),
+                    agroweather.get("/weather/forecast", {
+                        params: {
+                            lat: latitude,
+                            lon: longitude
+                        }
+                    })
+                ])
+            
                 console.log(weath, 'hello ');
                 
                 setLocation(geo);
@@ -89,15 +101,14 @@ const WeatherMain = () => {
                 const newIcon = displayWeatherIcon(weatherData?.weather?.[0]?.description)
                 setIcon(newIcon);
                 console.log(data);
-                console.log(geo);
-                
+                console.log(forecastt);
+                setForecast(forecastt?.data);
 
             } catch (error) {
                 console.error('err', error);
 
             }
         }
-
         
     }, [])
 
@@ -135,46 +146,41 @@ const WeatherMain = () => {
                         </div>
                     </div>
                     <p className=' font-semibold text-lg my-6'>5 Days Forecast</p>
-                    <div className='current-weather drop-shadow-2xl flex flex-col gap-3 p-10 rounded-2xl bg-white'>
+                    <div className='current-weather drop-shadow-2xl flex flex-col gap-3 p-8 rounded-2xl bg-white'>
                         <div className='flex justify-between items-center'>
                             <div className='flex items-center'>
-                                <img src={cloud2} alt="cloudy" />
-                                <p className='text-xl font-semibold'>18*</p>
+                                <img src={forecast[20] ? displayWeatherIcon(forecast[0]?.weather[0]?.description) : cloud2} alt="cloudy" />
+                                <p className='text-xl font-semibold'>{convertToCelsius(forecast[0]?.main.temp)}°C</p>
                             </div>
-                            <p>2 Jan</p>
-                            <p>Tuesday</p>
+                            <p>{convertUtcToNormalDate(forecast[0]?.dt)}</p>
                         </div>
                         <div className='flex justify-between items-center'>
                             <div className='flex items-center'>
-                                <img src={cloud2} alt="cloudy" />
-                                <p className='text-xl font-semibold'>18*</p>
+                                <img src={forecast[20] ? displayWeatherIcon(forecast[3]?.weather[0]?.description) : cloud2} alt="cloudy" />
+                                <p className='text-xl font-semibold'>{convertToCelsius(forecast[3]?.main.temp)}°C</p>
                             </div>
-                            <p>2 Jan</p>
-                            <p>Tuesday</p>
+                            <p>{convertUtcToNormalDate(forecast[3]?.dt)}</p>
                         </div>
                         <div className='flex justify-between items-center'>
                             <div className='flex items-center'>
-                                <img src={cloud2} alt="cloudy" />
-                                <p className='text-xl font-semibold'>18*</p>
+                                <img src={forecast[20] ? displayWeatherIcon(forecast[11]?.weather[0]?.description) : cloud2} alt="cloudy" />
+                                <p className='text-xl font-semibold'>{convertToCelsius(forecast[11]?.main.temp)}°C</p>
                             </div>
-                            <p>2 Jan</p>
-                            <p>Tuesday</p>
+                            <p>{convertUtcToNormalDate(forecast[11]?.dt)}</p>
                         </div>
                         <div className='flex justify-between items-center'>
                             <div className='flex items-center'>
-                                <img src={cloud2} alt="cloudy" />
-                                <p className='text-xl font-semibold'>18*</p>
+                                <img src={forecast[20] ? displayWeatherIcon(forecast[20]?.weather[0]?.description) : cloud2} alt="cloudy" />
+                                <p className='text-xl font-semibold'>{convertToCelsius(forecast[20]?.main.temp)}°C</p>
                             </div>
-                            <p>2 Jan</p>
-                            <p>Tuesday</p>
+                            <p>{convertUtcToNormalDate(forecast[20]?.dt)}</p>
                         </div>
                         <div className='flex justify-between items-center'>
                             <div className='flex items-center'>
-                                <img src={cloud2} alt="cloudy" />
-                                <p className='text-xl font-semibold'>18*</p>
+                                <img src={forecast[20] ? displayWeatherIcon(forecast[27]?.weather[0]?.description) : cloud2} alt="cloudy" />
+                                <p className='text-xl font-semibold'>{convertToCelsius(forecast[27]?.main.temp)}°C</p>
                             </div>
-                            <p>2 Jan</p>
-                            <p>Tuesday</p>
+                            <p>{convertUtcToNormalDate(forecast[27]?.dt)}</p>
                         </div>
 
                     </div>
@@ -268,6 +274,16 @@ const WeatherMain = () => {
                     </div>
                     <p className=' font-semibold text-lg my-6'>Today at</p>
                     <div className='grid grid-cols-3 gap-2 justify-between'>
+                        {/* {forecast?.map((fore:any) => {
+                            if (fore == forecast[8]) {
+                                return;
+                            } else {
+                                return(
+                                    <WeatherDetails time={convertUtcToNormalDate(fore?.dt)} img={cloud2} temp="9*"/>
+                                )
+                            }
+                        })} */}
+                        {}
                         <WeatherDetails time= "9PM" img={cloud2} temp="9*"/>
                         <WeatherDetails time= "9PM" img={cloud2} temp="9*"/>
                         <WeatherDetails time= "9PM" img={cloud2} temp="9*"/>
