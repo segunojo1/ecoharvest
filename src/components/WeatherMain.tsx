@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import weath from "../assets/pexels-pixabay-209831.jpg"
 import WeatherDetails from './WeatherDetails'
 import weather from '../http/weather'
 import agroweather from '../http/agroweather'
-import location from "../assets/location.svg"
+import locatio from "../assets/location.svg"
 import calender from "../assets/date.svg"
 import location2 from "../assets/location2.svg"
 import sun from "../assets/sun.svg"
@@ -15,9 +15,33 @@ import drop from "../assets/drop.svg"
 import pressure from "../assets/pressure.svg"
 import eye from "../assets/eye.svg"
 import temp from "../assets/temp.svg"
+import rain from "../assets/rain.svg"
+import { convertUtcToNormalDate } from '../helpers/convertutc'
+import { displayWeatherIcon } from '../helpers/displayicon'
+import { weatherDetails } from '../@types'
 
 
 const WeatherMain = () => {
+    const [weatherData, setWeatherData] = useState<weatherDetails>({
+        clouds: { all: 0 },
+        dt: 0,
+        main: {
+            feels_like: 0,
+            humidity: 0,
+            pressure: 0,
+            temp: 0,
+            temp_max: 0,
+            temp_min: 0,
+        },
+        weather: [{ description: "", icon: "", id: 0, main: "" }],
+        wind: { deg: 0, speed: 0 },
+        rain: {
+            '3h': 0
+        }
+    });
+    const [location, setLocation]:any = useState();
+    const [icon, setIcon]:any = useState();
+    const [loading, setLoading] = useState();
     let latitude: number;
     let longitude: number;
     useEffect(() => {
@@ -38,13 +62,35 @@ const WeatherMain = () => {
 
         const getWeatherDetails = async () => {
             try {
-                const weatherr = await agroweather.get("/weather", {
+                const {data} = await agroweather.get("/weather", {
                     params: {
                         lat: latitude,
                         lon: longitude
                     }
                 })
-                console.log(weatherr);
+                const geo = await weather.get("/geo/1.0/reverse", {
+                    params: {
+                        lat: latitude,
+                        lon: longitude
+                    }
+                })
+                const weath = await weather.get("/data/2.5/weather", {
+                    params: {
+                        lat: latitude,
+                        lon: longitude
+                    }
+                })
+                console.log(weath, 'hello ');
+                
+                setLocation(geo);
+                const weatherDetails: weatherDetails = data;
+                setWeatherData(weatherDetails);
+
+                const newIcon = displayWeatherIcon(weatherData?.weather?.[0]?.description)
+                setIcon(newIcon);
+                console.log(data);
+                console.log(geo);
+                
 
             } catch (error) {
                 console.error('err', error);
@@ -52,6 +98,7 @@ const WeatherMain = () => {
             }
         }
 
+        
     }, [])
 
 
@@ -62,7 +109,7 @@ const WeatherMain = () => {
                 <h1 className='text-2xl font-bold md:block hidden'>EcoHarvest</h1>
                 <input type="text" className='md:min-w-[500px] md:w-fit w-full rounded-full p-4' placeholder='Search a city' />
                 <div className='p-4 bg-[#446544] w-fit rounded-full flex items-center gap-3'>
-                    <img src={location} alt="location" />
+                    <img src={locatio} alt="location" />
                     <p className='w-fit font-bold md:block hidden'>Current Location</p>
                 </div>
             </div>
@@ -72,18 +119,19 @@ const WeatherMain = () => {
                     <div className='current-weather drop-shadow-2xl flex flex-col gap-3 p-8 rounded-2xl bg-white'>
                         <p className='text-xl font-medium'>Now</p>
                         <div className='flex items-center gap-1'>
-                            <h1 className='text-6xl font-semibold'>14*c</h1>
-                            <img src={sun} alt="" className='px-6' />
+                            <h1 className='text-6xl font-semibold'>{Math.round(weatherData.main?.temp - 273)}°C</h1>
+                            <img src={icon} alt="" className='px-6' />
+                            <p>{}</p>
                         </div>
-                        <p className='text-xl'>Clear sky</p>
+                        <p className='text-xl'>{weatherData?.weather?.[0]?.main}</p>
                         <div className='line my-2'></div>
                         <div className='flex gap-2 items-center'>
                             <img src={calender} alt="calender" />
-                            <p className='font-normal text-xl'>Tuesday, 2 Jan</p>
+                            <p className='font-normal text-xl'>{convertUtcToNormalDate(weatherData?.dt)}</p>
                         </div>
                         <div className='flex gap-2 items-center'>
                             <img src={location2} alt="location" />
-                            <p className='font-normal text-xl'>Lagos, Nigeria</p>
+                            <p className='font-normal text-xl'>{location?.data[0]?.state}</p>
                         </div>
                     </div>
                     <p className=' font-semibold text-lg my-6'>5 Days Forecast</p>
@@ -165,11 +213,11 @@ const WeatherMain = () => {
                             </div>
 
                             <div className='bg-[#eee8e0] p-6 w-full flex-[.5] rounded-md'>
-                                <p className='mb-5'>Sunrise & Sunset</p>
+                                <p className='mb-5'>Rain volume for the last 3 hours</p>
                                 <div className='flex justify-between items-center gap-8'>
                                     <div className='flex gap-3'>
 
-                                    <img src={sunset} alt="" />
+                                    <img src={rain} alt="" />
                                     <div className=''>
                                         <p>Sunrise</p>
                                         <p className=' text-lg'>6:41 AM</p>
@@ -191,28 +239,28 @@ const WeatherMain = () => {
                                 <p className='mb-5'>Humidity</p>
                                 <div className='flex justify-between items-center gap-8'>
                                     <img src={drop} alt="" />
-                                    <p className='text-xl'>54%</p>
+                                    <p className='text-xl'>{weatherData.main?.humidity}%</p>
                                 </div>
                             </div>
                             <div className='bg-[#eee8e0] p-4 rounded-md'>
                                 <p className='mb-5'>Pressure</p>
                                 <div className='flex justify-between items-center gap-8'>
                                     <img src={pressure} alt="" />
-                                    <p className='text-xl'>1011hPa</p>
+                                    <p className='text-xl'>{weatherData.main?.pressure}hPa</p>
                                 </div>
                             </div>
                             <div className='bg-[#eee8e0] p-4 rounded-md'>
-                                <p className='mb-5'>Visibility</p>
+                                <p className='mb-5'>Wind Speed</p>
                                 <div className='flex justify-between items-center gap-8'>
-                                    <img src={eye} alt="" />
-                                    <p className='text-xl'>10km</p>
+                                    <img src={wind} alt="" />
+                                    <p className='text-xl'>{weatherData.wind.speed} m/s</p>
                                 </div>
                             </div>
                             <div className='bg-[#eee8e0] p-4 rounded-md'>
                                 <p className='mb-5'>Feels Like</p>
                                 <div className='flex justify-between items-center gap-8'>
                                     <img src={temp} alt="" />
-                                    <p className='text-xl'>2*c</p>
+                                    <p className='text-xl'>{Math.round(weatherData.main?.feels_like - 273)}°C</p>
                                 </div>
                             </div>
                         </div>
