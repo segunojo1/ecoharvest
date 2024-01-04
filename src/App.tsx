@@ -1,6 +1,4 @@
 import { useContext, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import Navbar from './components/Navbar'
 import Login from './pages/Login'
@@ -14,6 +12,7 @@ import Weather from './pages/Weather'
 import Page404 from './pages/Page404'
 import NavContext, { NavProvider } from './context/NavContext'
 import { nav } from './@types'
+import MarketPrices from './pages/MarketPrices'
 
 function App() {
   const {activeNav, setActiveNav}:any= useContext(NavContext);
@@ -46,7 +45,7 @@ function App() {
             <PrivateRoute>
               <div className="dashboard">
                 <Sidebar />
-                <Dashboard />
+                <MarketPrices />
               </div>
             </PrivateRoute>
           } />

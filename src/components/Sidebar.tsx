@@ -9,16 +9,23 @@ import settings from "../assets/settings.svg"
 import social from "../assets/social.svg"
 import goals from "../assets/goals.png"
 import ai from "../assets/chat.svg"
-import { Link, useParams } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import SideComp from './SideComp'
 import NavContext from '../context/NavContext'
 
 const Sidebar = () => {
-    const [activeComponent, setActiveComponent] = useState('dashboard');
+    const location = useLocation();
+    const currentPath = location.pathname;
+  
+    // Extract the last segment after the last slash
+    const lastSegment = currentPath.substring(currentPath.lastIndexOf('/') + 1);
+    
+    const [activeComponent, setActiveComponent] = useState(lastSegment);
     const {activeNav, setActiveNav}:any = useContext(NavContext);
+
     const handleClick = (comp: string) => {
         if (activeComponent == comp) {
-            setActiveComponent('')
+            ;
         } else {
             setActiveComponent(comp)
         }

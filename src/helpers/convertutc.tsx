@@ -6,7 +6,6 @@ export function convertUtcToNormalDate(utcTimestamp: number): string {
     const normalDate = new Date(milliseconds);
 
     const dateObject = new Date(normalDate);
-    console.log(dateObject);
     
 
 // Use toLocaleDateString to get the date part

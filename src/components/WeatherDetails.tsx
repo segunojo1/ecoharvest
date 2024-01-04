@@ -5,7 +5,7 @@ const WeatherDetails = ({time, img, temp}: any) => {
     <div className='flex flex-col px-5 py-2 rounded-lg items-center weath gap-2 bg-white'>
       <p>{time}</p>
         <img src={img} alt="" />
-          <p className='font-semibold'>{temp}</p>
+          <p className='font-semibold'>{temp}°C</p>
     </div>
   )
 }

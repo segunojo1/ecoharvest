@@ -21,6 +21,7 @@ import { displayWeatherIcon } from '../helpers/displayicon'
 import { weatherDetails } from '../@types'
 import { convertToCelsius } from '../helpers/converttocelsius'
 import { getTime } from '../helpers/gettime'
+import { convrtUtcToFullDate } from '../helpers/convertutctofull'
 
 
 const WeatherMain = () => {
@@ -38,13 +39,16 @@ const WeatherMain = () => {
         weather: [{ description: "", icon: "", id: 0, main: "" }],
         wind: { deg: 0, speed: 0 },
         rain: {
-            '3h': 0
+            '1h': 0
         }
     });
     const [location, setLocation]:any = useState();
     const [icon, setIcon]:any = useState();
     const [loading, setLoading] = useState();
     const [forecast, setForecast]:any = useState([]);
+    const [dayForecast, setDayForecast]:any = useState([]);
+
+
     let latitude: number;
     let longitude: number;
     useEffect(() => {
@@ -98,19 +102,33 @@ const WeatherMain = () => {
                 const weatherDetails: weatherDetails = data;
                 setWeatherData(weatherDetails);
 
-                const newIcon = displayWeatherIcon(weatherData?.weather?.[0]?.description)
-                setIcon(newIcon);
+                
                 console.log(data);
                 console.log(forecastt);
                 setForecast(forecastt?.data);
-
-            } catch (error) {
+                // const newArray = [...(forecast ?? []).slice(0, 8), ...(forecast ?? []).slice(31)];
+                // setDayForecast(newArray);
+            } catch (error) { 
                 console.error('err', error);
-
             }
         }
         
     }, [])
+
+    useEffect(() => {
+
+    }, [dayForecast])
+
+    useEffect(() => {
+        // Ensure forecast state is available and has the correct format before creating newArray
+        const newArray = forecast?.splice(0, 8) || [];
+        setDayForecast(newArray);
+        console.log(dayForecast);
+
+        const newIcon = displayWeatherIcon(weatherData?.weather?.[0]?.description)
+                setIcon(newIcon);
+        
+    }, [forecast, weatherData]);
 
 
     return (
@@ -221,9 +239,9 @@ const WeatherMain = () => {
                             <div className='bg-[#eee8e0] p-6 w-full flex-[.5] rounded-md'>
                                 <p className='mb-5'>Rain volume for the last 3 hours</p>
                                 <div className='flex justify-between items-center gap-8'>
-                                    <div className='flex gap-3'>
+                                    <img src={rain} alt="" /> 
+                                    {/* <div className='flex gap-3'>
 
-                                    <img src={rain} alt="" />
                                     <div className=''>
                                         <p>Sunrise</p>
                                         <p className=' text-lg'>6:41 AM</p>
@@ -236,7 +254,8 @@ const WeatherMain = () => {
                                         <p>Sunset</p>
                                         <p className=' text-lg'>6:00 PM</p>
                                     </div>
-                                    </div>
+                                    </div> */}
+                                    <p className=' text-lg'>{weatherData.rain?.['1h']}mm </p>
                                 </div>
                             </div>
                         </div>
@@ -283,15 +302,17 @@ const WeatherMain = () => {
                                 )
                             }
                         })} */}
-                        {}
+                        {dayForecast?.map((forecast:any) => (
+                        <WeatherDetails time={getTime(convrtUtcToFullDate(forecast?.dt))} img={displayWeatherIcon(forecast?.weather[0].description)} temp={convertToCelsius(forecast?.main?.temp)}/>
+                        ))} 
+                        {/* <WeatherDetails time= "9PM" img={cloud2} temp="9*"/>
                         <WeatherDetails time= "9PM" img={cloud2} temp="9*"/>
                         <WeatherDetails time= "9PM" img={cloud2} temp="9*"/>
                         <WeatherDetails time= "9PM" img={cloud2} temp="9*"/>
                         <WeatherDetails time= "9PM" img={cloud2} temp="9*"/>
                         <WeatherDetails time= "9PM" img={cloud2} temp="9*"/>
                         <WeatherDetails time= "9PM" img={cloud2} temp="9*"/>
-                        <WeatherDetails time= "9PM" img={cloud2} temp="9*"/>
-                        <WeatherDetails time= "9PM" img={cloud2} temp="9*"/>
+                        <WeatherDetails time= "9PM" img={cloud2} temp="9*"/> */}
                     </div>
                 </div>
             </div>

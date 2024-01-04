@@ -32,6 +32,6 @@ export interface weatherDetails {
         speed: number;
     };
     rain?: {
-        '3h':number;
+        '1h':number;
     }
 }
