@@ -13,6 +13,7 @@ import Page404 from './pages/Page404'
 import NavContext, { NavProvider } from './context/NavContext'
 import { nav } from './@types'
 import MarketPrices from './pages/MarketPrices'
+import SoilData from './pages/SoilData'
 
 function App() {
   const {activeNav, setActiveNav}:any= useContext(NavContext);
@@ -27,6 +28,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
           <Route path='/dashboard'  element={
+            <PrivateRoute>
             <NavProvider>
               <div className="dashboard">
                 <Sidebar />
@@ -34,12 +36,15 @@ function App() {
                 <Dashboard />
               </div>
             </NavProvider>
+            </PrivateRoute>
           } />
           <Route path='/weather'  element={
+            <PrivateRoute>
               <div className="dashboard">
                 <Sidebar />
                 <Weather />
               </div>
+            </PrivateRoute>
           } />
           <Route path='/market'  element={
             <PrivateRoute>
@@ -55,6 +60,14 @@ function App() {
               <div className="dashboard">
                 <Sidebar />
                 <Dashboard />
+              </div>
+            </PrivateRoute>
+          } />
+          <Route path='/soil'  element={
+            <PrivateRoute>
+              <div className="dashboard">
+                <Sidebar />
+                <SoilData />
               </div>
             </PrivateRoute>
           } />

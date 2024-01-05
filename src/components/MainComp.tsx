@@ -137,12 +137,14 @@ const MainComp = () => {
                     <h2 className='text-2xl font-semibold text-[#fff]'>See <br /> Weather</h2>
                 </div>
                 </Link>
-                <div className='p-[.7rem] w-[230px] border-[1px] rounded-[16px] border-[#D9D9D9]'>
-                    <div className='w-[150px] h-[150px] rounded-full border-[#D9D9D9] border-[20px] items-center flex justify-center mb-[25px]'>0</div>
-                    <h1 className='text-xl font-semibold'>Task Summary</h1>
-                    <p className='text-xl font-semibold'>0</p>
-                    <p className=' font-medium'>Overall for today on EcoHarvest</p>
+                <Link to="/soil">
+                
+                <div className='p-[.6rem] w-[230px] h-[300px] border-[1px] rounded-[16px] gap-[.3rem] flex flex-col justify-between border-[#D9D9D9] weatherr'>
+                    <img src={weather} alt="weather" className='w-fit' />
+
+                    <h2 className='text-2xl font-semibold text-[#fff]'>Soil <br /> Data</h2>
                 </div>
+                </Link>
             </div>
         </div>
     )

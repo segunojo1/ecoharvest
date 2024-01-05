@@ -42,12 +42,13 @@ const WeatherMain = () => {
             '1h': 0
         }
     });
-    const [location, setLocation]:any = useState();
-    const [icon, setIcon]:any = useState();
+    const [location, setLocation]: any = useState();
+    const [icon, setIcon]: any = useState();
     const [loading, setLoading] = useState();
-    const [forecast, setForecast]:any = useState([]);
-    const [dayForecast, setDayForecast]:any = useState([]);
-
+    const [forecast, setForecast]: any = useState([]);
+    const [dayForecast, setDayForecast]: any = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchResults, setSearchResults] = useState();
 
     let latitude: number;
     let longitude: number;
@@ -69,7 +70,7 @@ const WeatherMain = () => {
 
         const getWeatherDetails = async () => {
             try {
-                const {data} = await agroweather.get("/weather", {
+                const { data } = await agroweather.get("/weather", {
                     params: {
                         lat: latitude,
                         lon: longitude
@@ -95,24 +96,24 @@ const WeatherMain = () => {
                         }
                     })
                 ])
-            
+
                 console.log(weath, 'hello ');
-                
+
                 setLocation(geo);
                 const weatherDetails: weatherDetails = data;
                 setWeatherData(weatherDetails);
 
-                
+
                 console.log(data);
                 console.log(forecastt);
                 setForecast(forecastt?.data);
                 // const newArray = [...(forecast ?? []).slice(0, 8), ...(forecast ?? []).slice(31)];
                 // setDayForecast(newArray);
-            } catch (error) { 
+            } catch (error) {
                 console.error('err', error);
             }
         }
-        
+
     }, [])
 
     useEffect(() => {
@@ -126,17 +127,61 @@ const WeatherMain = () => {
         console.log(dayForecast);
 
         const newIcon = displayWeatherIcon(weatherData?.weather?.[0]?.description)
-                setIcon(newIcon);
-        
+        setIcon(newIcon);
+
     }, [forecast, weatherData]);
 
+
+    const debounce = (func: any, delay: number) => {
+        let timeoutId: any;
+        return (...args: any) => {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => func(...args), delay);
+        };
+    };
+
+
+    const showCities = debounce(async (e: any) => {
+
+        try {
+            const results = await weather.get("/geo/1.0/direct", {
+                params: {
+                    q: e
+                }
+            })
+            console.log(searchQuery);
+
+            console.log(results);
+
+        } catch (error) {
+
+        }
+    }, 2000)
+
+    const handleKeyUp = (e: any) => {
+        setSearchQuery(e.target.value);
+        showCities(e.target.value);
+    }
 
     return (
         <div className='p-[1.4rem] gap-5'>
 
             <div className='flex items-center justify-between w-full mb-5 gap-3'>
                 <h1 className='text-2xl font-bold md:block hidden'>EcoHarvest</h1>
-                <input type="text" className='md:min-w-[500px] md:w-fit w-full rounded-full p-4' placeholder='Search a city' />
+                <div className='relative'>
+
+                    <input
+                        type="text"
+                        className='md:min-w-[500px] md:w-fit w-full rounded-full p-4'
+                        placeholder='Search a city'
+                        onChange={handleKeyUp}
+                        value={searchQuery}
+                    />
+                    <div className='text-center  weath absolute z-50 w-full bg-[white] rounded-xl'>
+                        <p className='pt-2 bg-[#f3ead9] cursor-pointer'>Lagos, Nigeria.</p>
+                        
+                    </div>
+                </div>
                 <div className='p-4 bg-[#446544] w-fit rounded-full flex items-center gap-3'>
                     <img src={locatio} alt="location" />
                     <p className='w-fit font-bold md:block hidden'>Current Location</p>
@@ -150,7 +195,7 @@ const WeatherMain = () => {
                         <div className='flex items-center gap-1'>
                             <h1 className='text-6xl font-semibold'>{Math.round(weatherData.main?.temp - 273)}°C</h1>
                             <img src={icon} alt="" className='px-6' />
-                            <p>{}</p>
+                            <p>{ }</p>
                         </div>
                         <p className='text-xl'>{weatherData?.weather?.[0]?.main}</p>
                         <div className='line my-2'></div>
@@ -239,7 +284,7 @@ const WeatherMain = () => {
                             <div className='bg-[#eee8e0] p-6 w-full flex-[.5] rounded-md'>
                                 <p className='mb-5'>Rain volume for the last 3 hours</p>
                                 <div className='flex justify-between items-center gap-8'>
-                                    <img src={rain} alt="" /> 
+                                    <img src={rain} alt="" />
                                     {/* <div className='flex gap-3'>
 
                                     <div className=''>
@@ -302,9 +347,9 @@ const WeatherMain = () => {
                                 )
                             }
                         })} */}
-                        {dayForecast?.map((forecast:any) => (
-                        <WeatherDetails time={getTime(convrtUtcToFullDate(forecast?.dt))} img={displayWeatherIcon(forecast?.weather[0].description)} temp={convertToCelsius(forecast?.main?.temp)}/>
-                        ))} 
+                        {dayForecast?.map((forecast: any) => (
+                            <WeatherDetails time={getTime(convrtUtcToFullDate(forecast?.dt))} img={displayWeatherIcon(forecast?.weather[0].description)} temp={convertToCelsius(forecast?.main?.temp)} />
+                        ))}
                         {/* <WeatherDetails time= "9PM" img={cloud2} temp="9*"/>
                         <WeatherDetails time= "9PM" img={cloud2} temp="9*"/>
                         <WeatherDetails time= "9PM" img={cloud2} temp="9*"/>
