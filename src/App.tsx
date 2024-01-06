@@ -14,6 +14,7 @@ import NavContext, { NavProvider } from './context/NavContext'
 import { nav } from './@types'
 import MarketPrices from './pages/MarketPrices'
 import SoilData from './pages/SoilData'
+import { PolygonProvider } from './context/PolygonContext'
 
 function App() {
   const {activeNav, setActiveNav}:any= useContext(NavContext);
@@ -30,11 +31,14 @@ function App() {
           <Route path='/dashboard'  element={
             <PrivateRoute>
             <NavProvider>
+              <PolygonProvider>
+
               <div className="dashboard">
                 <Sidebar />
                 <div className='ham' onClick={(e) => showSidebar(e)}></div>
                 <Dashboard />
               </div>
+              </PolygonProvider>
             </NavProvider>
             </PrivateRoute>
           } />
@@ -65,10 +69,12 @@ function App() {
           } />
           <Route path='/soil'  element={
             <PrivateRoute>
+              <PolygonProvider>
               <div className="dashboard">
                 <Sidebar />
                 <SoilData />
               </div>
+              </PolygonProvider>
             </PrivateRoute>
           } />
           <Route path='*' element={<Page404 />}/>

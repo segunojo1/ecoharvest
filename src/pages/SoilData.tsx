@@ -1,13 +1,22 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import locatio from "../assets/location.svg"
 import page404 from '../assets/pg4.svg'
 import agroweather from '../http/agroweather'
+import PolygonContext from '../context/PolygonContext'
+import weather from '../http/weather'
 
 const SoilData = () => {
-    let longitude;
-    let latitude;
+
+    const {polygons, setPolygons, location, setLocation}:any = useContext(PolygonContext);
+    const [polygonId, setPolygonId]:any = useState();
+    const [soilData, setSoilData]:any = useState();
+    let longitude:any;
+    let latitude:any;
     useEffect(() => {
+        console.log(polygons);
+        
+       
 
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition);
@@ -19,18 +28,35 @@ const SoilData = () => {
             latitude = position.coords.latitude;
             longitude = position.coords.longitude;
 
-            getSoilData();
+            
         }
+        
         const getSoilData = async () => {
+            console.log(polygonId);
             try {
-                const polygons = await agroweather.get("/polygons")
-
-                console.log(polygons);
+                const {data} = await agroweather.get("/soil", {
+                    params:{
+                        polyid: polygonId
+                    }
+                })
+                setSoilData(data);
+                
                 
             } catch (error) {
                 
             }
         }
+        for (let i = 0; i < 8; i++) {
+            if(polygons[i]?.name == location[0]?.state){
+             setPolygonId( polygons[i]?.id);
+             console.log(polygonId);
+             getSoilData();
+             break;
+            }
+             console.log('nope');
+         } 
+
+       
     }, [])
     return (
         <div className='flex-[.8] md:ml-[234px] ml-0'>
@@ -62,8 +88,9 @@ const SoilData = () => {
                     <p className='text-center font-semibold flex-[.5]'>Note: Soil data presented is for your current location, for more accurate results stand in the center of your farm.</p>
                     <div className='longline'></div>
                     <div className='flex-[.5]'>
-                        <p>Soil temperature: 223</p>
-                        <p>Soil moisture: 34</p>
+                        <p>Soil temperature(Surface): {soilData?.t0}K</p>
+                        <p>Soil temperature(10cm deep): {soilData?.t10}K</p>
+                        <p>Soil moisture: {soilData?.moisture}m3/m3</p>
                     </div>
                 </div>
             </div>
