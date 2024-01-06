@@ -6,12 +6,14 @@ import agroweather from '../http/agroweather'
 import PolygonContext from '../context/PolygonContext'
 import weather from '../http/weather'
 import { Polygon } from '../@types'
+import { convertToCelsius } from '../helpers/converttocelsius'
 
 const SoilData = () => {
 
     const {polygons, setPolygons, location, setLocation}:any = useContext(PolygonContext);
     const [polygonId, setPolygonId]:any = useState();
     const [soilData, setSoilData]:any = useState();
+    const [recommendation, setRecommendation] = useState('');
     let longitude:any;
     let latitude:any;
     useEffect(() => {
@@ -34,7 +36,14 @@ const SoilData = () => {
             }
         };
         getLocationAndSoilData();
-    }, [polygons, location])
+
+        
+        // generateRecommendation(soilData)
+    }, [polygons, location, recommendation])
+
+    useEffect(() => {
+        generateRecommendation(soilData)
+    }, soilData)
 
     async function getCurrentPosition(): Promise<GeolocationPosition | null> {
         return new Promise((resolve) => {
@@ -58,10 +67,36 @@ const SoilData = () => {
                 }
             })
             setSoilData(data);
-            
-            
+            // generateRecommendation(soilData)
         } catch (error) {
             
+        }
+    }
+
+    const generateRecommendation = (soilData:any) => {
+        const surfaceTemp = soilData?.t0;
+        const deepTemp = soilData?.t10;
+        const soilMoisture = soilData?.moisture;
+
+        if (surfaceTemp && deepTemp && soilMoisture) {
+            
+            if (surfaceTemp > 301 ) {
+                setRecommendation("Surface temperature is too high. ")
+            }
+            if (deepTemp > 303) {
+                setRecommendation(recommendation + "Deep temperature is too high. ")
+            }
+            if (soilMoisture < 0.3) {
+                setRecommendation(recommendation + "Soil moisture is too low. Irrigation is needed")
+            }
+            if (recommendation == "") {
+                setRecommendation("Soil conditions are generally okay")
+            }
+
+            // return recommendation;
+        }
+        else{
+            setRecommendation('Unable to provide recommendations. Missing soil data.')
         }
     }
     return (
@@ -94,10 +129,17 @@ const SoilData = () => {
                     <p className='text-center font-semibold flex-[.5]'>Note: Soil data presented is for your current location, for more accurate results stand in the center of your farm.</p>
                     <div className='longline'></div>
                     <div className='flex-[.5]'>
-                        <p>Soil temperature(Surface): {soilData?.t0}K</p>
-                        <p>Soil temperature(10cm deep): {soilData?.t10}K</p>
+                        <p>Soil temperature(Surface): {convertToCelsius(soilData?.t0)}°C</p>
+                        <p>Soil temperature(10cm deep): {convertToCelsius(soilData?.t10)}°C</p>
                         <p>Soil moisture: {soilData?.moisture}m3/m3</p>
                     </div>
+                </div>
+
+                <div className='mt-5'>
+                    <p className=' underline decoration-slice'>RECOMMENDATIONS</p>
+                    <ul>
+                        <li>{recommendation}</li> 
+                    </ul>
                 </div>
             </div>
         </div>

@@ -444,6 +444,10 @@ form div {
 .market:hover, .weatherr:hover{
     box-shadow: rgba(79, 79, 85, 0.2) 0px 7px 29px 0px;
 }
+.soil{
+    background-image: url('./assets//pexels-lisa-fotios-1301856.jpg');
+    background-size: cover;
+}
 /* .market h2{
     text-shadow: 6px 6px 3px rgb(130, 223, 17);
 } */

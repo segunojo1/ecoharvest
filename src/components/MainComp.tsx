@@ -139,7 +139,7 @@ const MainComp = () => {
                 </Link>
                 <Link to="/soil">
                 
-                <div className='p-[.6rem] w-[230px] h-[300px] border-[1px] rounded-[16px] gap-[.3rem] flex flex-col justify-between border-[#D9D9D9] weatherr'>
+                <div className='p-[.6rem] w-[230px] h-[300px] border-[1px] rounded-[16px] gap-[.3rem] flex flex-col justify-between border-[#D9D9D9] soil'>
                     <img src={weather} alt="weather" className='w-fit' />
 
                     <h2 className='text-2xl font-semibold text-[#fff]'>Soil <br /> Data</h2>
