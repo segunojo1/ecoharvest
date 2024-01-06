@@ -5,6 +5,7 @@ import page404 from '../assets/pg4.svg'
 import agroweather from '../http/agroweather'
 import PolygonContext from '../context/PolygonContext'
 import weather from '../http/weather'
+import { Polygon } from '../@types'
 
 const SoilData = () => {
 
@@ -14,50 +15,55 @@ const SoilData = () => {
     let longitude:any;
     let latitude:any;
     useEffect(() => {
-        console.log(polygons);
-        
-       
+        const getLocationAndSoilData = async () => {
+            const position = await getCurrentPosition();
+            if (position) {
+                latitude = position.coords.latitude;
+                longitude = position.coords.longitude;
+    
+                const matchingPolygon = polygons.find((polygon: Polygon) => polygon.name === location[0]?.state);
+                if (matchingPolygon) {
+                    setPolygonId(matchingPolygon.id);
+                    console.log(matchingPolygon.id);
+                    await getSoilData(matchingPolygon.id);
+                } else {
+                    console.log('Polygon not found');
+                }
+            } else {
+                console.log("Geolocation not available");
+            }
+        };
+        getLocationAndSoilData();
+    }, [polygons, location])
 
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
-        } else {
-            console.log("Geolocation is not supported by this browser.");
-        }
-
-        function showPosition(position: any) {
-            latitude = position.coords.latitude;
-            longitude = position.coords.longitude;
-
+    async function getCurrentPosition(): Promise<GeolocationPosition | null> {
+        return new Promise((resolve) => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position: GeolocationPosition) => resolve(position),
+                    () => resolve(null) // In case of error or denial, resolve with null
+                );
+            } else {
+                resolve(null);
+            }
+        });
+    }
+    
+    const getSoilData = async (polygonId: any) => {
+        console.log(polygonId);
+        try {
+            const {data} = await agroweather.get("/soil", {
+                params:{
+                    polyid: polygonId
+                }
+            })
+            setSoilData(data);
+            
+            
+        } catch (error) {
             
         }
-        
-        const getSoilData = async () => {
-            console.log(polygonId);
-            try {
-                const {data} = await agroweather.get("/soil", {
-                    params:{
-                        polyid: polygonId
-                    }
-                })
-                setSoilData(data);
-                
-                
-            } catch (error) {
-                
-            }
-        }
-        for (let i = 0; i < 8; i++) {
-            if(polygons[i]?.name == location[0]?.state){
-             setPolygonId( polygons[i]?.id);
-             console.log(polygonId);
-             getSoilData();
-             break;
-            }
-             console.log('nope');
-         } 
-
-       
-    }, [])
+    }
     return (
         <div className='flex-[.8] md:ml-[234px] ml-0'>
             <Navbar />

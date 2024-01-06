@@ -32,6 +32,29 @@ export interface weatherDetails {
         speed: number;
     };
     rain?: {
-        '1h':number;
+        '1h': number;
     }
+}
+
+export interface Polygon {
+    area: number;
+    center: [];
+    created_at: number;
+    geo_json: {
+        geometry: {
+            coordinates: [
+                [
+                    [], [], [], []
+                ]
+            ];
+            type: string;
+        };
+        properties: {
+
+        };
+        type: string;
+    }
+    id: string;
+    name: string;
+    user_id: string
 }
