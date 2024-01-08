@@ -2,7 +2,9 @@ import React from 'react'
 
 const BestPractices = () => {
   return (
-    <div>BestPractices</div>
+    <div>
+        
+    </div>
   )
 }
 
