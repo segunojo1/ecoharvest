@@ -13,13 +13,14 @@ const CropRecommendation = () => {
         ph: '',
         rainfall: '',
     });
+    const [recommendedCrop, setRecommendedCrop] = useState('');
     useEffect(() => {
     }, [])
     const getPrediction = async () => {
         try {
             const {data} = await cropreccomendation.post("/crop-recommendation", soilDetails);
             console.log(data);
-            
+            setRecommendedCrop(data[0]['recommended crop'])
             
         } catch (error) {
 
@@ -38,7 +39,9 @@ const CropRecommendation = () => {
                 <h1 className=' font-bold text-3xl'>FIND THE BEST CROPS TO PLANT</h1>
                 <p className=''>Input the your soil details to get recommendations from our ai/ml model</p>
 
-                <div className='p-4 w-[500px] shadow-lg gap-4 flex flex-col items-center mt-10 m-auto'>
+                <div className='flex justify-evenly'>
+
+                <div className='p-4 w-[500px] shadow-lg gap-4 flex flex-col items-center mt-10'>
                     <p className='font-bold text-2xl mb-3'>Crop Recommendation</p>
                     <input 
                     type='number' 
@@ -92,6 +95,10 @@ const CropRecommendation = () => {
                     <button 
                     className='btn'
                     onClick={getPrediction}>SUBMIT</button>
+                </div>
+                <div className='flex items-center'>
+                   <p className='text-center text-2xl'>The Recommended crop to plant is ...<br /> <span className=' underline font-semibold'>{recommendedCrop}</span></p>  
+                </div>
                 </div>
             </div>
         </div>

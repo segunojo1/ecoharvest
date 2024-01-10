@@ -115,7 +115,8 @@ body{
         justify-content: center;
         gap: 20px;
 }
-input{
+input, textarea{
+    height: fit-content;
     width: fit-content;
   padding: .7rem .6rem;
   border-radius: 4px;

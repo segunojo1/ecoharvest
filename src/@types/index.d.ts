@@ -58,3 +58,8 @@ export interface Polygon {
     name: string;
     user_id: string
 }
+
+export interface ChatLogItem {
+    user: string;
+    message: null | string;
+  }
