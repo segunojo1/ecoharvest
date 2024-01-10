@@ -15,6 +15,7 @@ import { nav } from './@types'
 import MarketPrices from './pages/MarketPrices'
 import SoilData from './pages/SoilData'
 import { PolygonProvider } from './context/PolygonContext'
+import CropRecommendation from './pages/CropRecommendation'
 
 function App() {
   const {activeNav, setActiveNav}:any= useContext(NavContext);
@@ -75,6 +76,14 @@ function App() {
                 <SoilData />
               </div>
               </PolygonProvider>
+            </PrivateRoute>
+          } />
+          <Route path='/croprecommendation'  element={
+            <PrivateRoute>
+              <div className="dashboard">
+                <Sidebar />
+                <CropRecommendation />
+              </div>
             </PrivateRoute>
           } />
           <Route path='*' element={<Page404 />}/>

@@ -116,6 +116,7 @@ body{
         gap: 20px;
 }
 input{
+    width: fit-content;
   padding: .7rem .6rem;
   border-radius: 4px;
   outline: none;
@@ -437,7 +438,7 @@ form div {
     
 }
 .market{
-    background-image: url('./assets/pexels-pedram-ahmadian-2686820.jpg');
+    background-image: url('./assets/pexels-breakingpic-3305.jpg');
     background-size: cover;
     box-shadow: rgba(0, 0, 0, 0.584) 0px -105px 36px -28px inset;
 }
@@ -457,6 +458,10 @@ form div {
 }
 .current-weather, .weath{
     box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+}
+.crop{
+    background-image: url('./assets/pexels-tim-mossholder-974316.jpg');
+    background-size: cover;
 }
 .ham{
     width: 40px;

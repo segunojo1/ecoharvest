@@ -145,6 +145,13 @@ const MainComp = () => {
                     <h2 className='text-2xl font-semibold text-[#fff]'>Soil <br /> Data</h2>
                 </div>
                 </Link>
+                <Link to="/croprecommendation">
+                <div className='p-[.6rem] w-[230px] h-[300px] border-[1px] rounded-[16px] gap-[.3rem] flex flex-col justify-between border-[#D9D9D9] crop'>
+                    <img src={weather} alt="weather" className='w-fit' />
+
+                    <h2 className='text-2xl font-semibold text-[#fff]'>Crop <br /> Recommendation</h2>
+                </div>
+                </Link>
             </div>
         </div>
     )
