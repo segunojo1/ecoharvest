@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import logo from "../assets/logo.png"
 import dash from "../assets/dashboard.svg"
 import dropdown from "../assets/dropdown.svg"
@@ -22,7 +22,7 @@ const Sidebar = () => {
   
     // Extract the last segment after the last slash
     const lastSegment = currentPath.substring(currentPath.lastIndexOf('/') + 1);
-    // ****************side bar states*********************8
+    // ****************side bar states*********************
     const [activeComponent, setActiveComponent] = useState(lastSegment);
     const {activeNav, setActiveNav}:any = useContext(NavContext);
 
@@ -32,7 +32,13 @@ const Sidebar = () => {
         apiKey: import.meta.env.VITE_OPENAI_KEY,
         dangerouslyAllowBrowser: true,
     })
-    
+
+    // ***********SHOW CHATBOX STATE**************
+    const [showChat, setShowChat] = useState(false);
+
+    const handleShowChat = () => {
+        setShowChat(!showChat);
+    }
 
     // **********CHAT BOT STATES***************
     const [userMessage, setUserMessage] = useState('');
@@ -54,6 +60,10 @@ const Sidebar = () => {
         console.log("click11");
     }
 
+    const setMess = () => {
+        
+    }
+
     /**
      * sendMessage: handles sending prompt to openai
      * @param e- event
@@ -61,7 +71,9 @@ const Sidebar = () => {
     const sendMessage = async (e:any) => {
         e.preventDefault();
         setUserMessage('');
-        setChatLog([...chatLog, {user: "me", message: userMessage}])
+        setChatLog(prevChatLog => [...prevChatLog, { user: "me", message: userMessage }]);
+        console.log(userMessage);
+        
         try {
             const res = await openai.chat.completions.create({
                 messages: [{
@@ -71,19 +83,22 @@ const Sidebar = () => {
                 temperature: 0.7
             })
             const response = res.choices[0].message.content;
-            setChatLog([...chatLog, {user: "chat", message: response}])
+            setChatLog(prevChatLog => [...prevChatLog, { user: "chat", message: response }]);
             console.log(res.choices[0]);
             
         } catch (error) {
             
         }
+        console.log(chatLog);
+        
     }
     /**
      * handleMessage: handles settin state of message while typing
      * @param e 
      */
     const handleMessage = (e:React.ChangeEvent<HTMLTextAreaElement>) => {
-        setUserMessage(e.target.value)
+        setUserMessage(e.target.value);
+        
     }
 
     /**
@@ -97,7 +112,9 @@ const Sidebar = () => {
           }
     }
 
-    
+    useEffect(() => {
+
+    }, [])
     return (
         <div className={`dashside ${activeNav ? 'block' : 'hidden'} md:block`}>
             <img src={logo} alt="logo" className='w-[180px]' />
@@ -117,13 +134,13 @@ const Sidebar = () => {
             <div className="line"></div>
             <SideComp handleClick={() => handleClick("personalization")} isActive={activeComponent == "personalization"} component="personalization" icon={settings} text="Personalization" drop={null} />
             <SideComp handleClick={() => handleClick("help")} isActive={activeComponent == "help"} component="help" icon={messages} text="Help" drop={null} />
-            <div className='flex items-center gap-2 mt-8 cursor-pointer'>
+            <div className='flex items-center gap-2 mt-8 cursor-pointer' onClick={handleShowChat}>
                 <img src={ai} alt="chat with ai" className="w-[60px]" />
                 <p className='text-[#6E7390]'>Chat with AI</p>
             </div>
 
            {/* *****************CHAT BOT*********************/}
-            <div className=' h-[80vh] w-[400px] absolute bottom-24 bg-slate-800 flex flex-col z-10'>
+            <div className={`${showChat ? 'bottom-24' : 'bottom-[-35rem]'} h-[80vh] w-[400px] absolute bg-slate-800 flex flex-col z-10 transition-all`}>
                 <div className='bg-[#c3f07a] p-4 flex gap-4 items-center'>
                     <div className='w-[50px] h-[50px] rounded-full bg-black'></div>
                     <div className='flex flex-col'>
@@ -148,6 +165,7 @@ const Sidebar = () => {
                                 <p className='p-1 bg-white w-fit rounded-lg rounded-bl-none'>{chat.message}</p>
                             )
                         }
+                        
                     })}
                 </div>
                 {/* ********************END OF CHAT*************** */}
