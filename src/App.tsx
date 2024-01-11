@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import './App.css'
 import Navbar from './components/Navbar'
 import Login from './pages/Login'
@@ -23,6 +23,24 @@ function App() {
     e.target.classList.toggle("activenav")
     setActiveNav((prev:any) => !prev);
   }
+  const googleTranslateElementInit = () => {
+    new (window as any).google.translate.TranslateElement(
+      {
+        pageLanguage: "en",
+        autoDisplay: false
+      },
+      "google_translate_element"
+    );
+  };
+  useEffect(() => {
+    var addScript = document.createElement("script");
+    addScript.setAttribute(
+      "src",
+      "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    );
+    document.body.appendChild(addScript);
+    (window as any).googleTranslateElementInit = googleTranslateElementInit;
+  }, []);
   return (
     <>
       <BrowserRouter>

@@ -49,6 +49,7 @@ const WeatherMain = () => {
     const [dayForecast, setDayForecast]: any = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState();
+    const [airQUality, setAirQuality]:any = useState();
 
     let latitude: number;
     let longitude: number;
@@ -76,7 +77,7 @@ const WeatherMain = () => {
                         lon: longitude
                     }
                 })
-                const [geo, weath, forecastt] = await Promise.all([
+                const [geo, weath, forecastt, air] = await Promise.all([
                     weather.get("/geo/1.0/reverse", {
                         params: {
                             lat: latitude,
@@ -94,6 +95,12 @@ const WeatherMain = () => {
                             lat: latitude,
                             lon: longitude
                         }
+                    }), 
+                    weather.get("/data/2.5/air_pollution", {
+                        params: {
+                            lat: latitude,
+                            lon: longitude
+                        }
                     })
                 ])
 
@@ -102,10 +109,10 @@ const WeatherMain = () => {
                 setLocation(geo);
                 const weatherDetails: weatherDetails = data;
                 setWeatherData(weatherDetails);
+                setAirQuality(air);
 
-
-                console.log(data);
-                console.log(forecastt);
+                console.log(data); 
+                console.log(air);
                 setForecast(forecastt?.data);
                 // const newArray = [...(forecast ?? []).slice(0, 8), ...(forecast ?? []).slice(31)];
                 // setDayForecast(newArray);
@@ -190,7 +197,7 @@ const WeatherMain = () => {
 
             <div className='flex md:flex-row flex-col justify-between'>
                 <div>
-                    <div className='current-weather drop-shadow-2xl flex flex-col gap-3 p-8 rounded-2xl bg-white'>
+                    <div className='current-weather drop-shadow-2xl flex flex-col gap-3 p-8 rounded-2xl bg-white -z-50 '>
                         <p className='text-xl font-medium'>Now</p>
                         <div className='flex items-center gap-1'>
                             <h1 className='text-6xl font-semibold'>{Math.round(weatherData.main?.temp - 273)}°C</h1>
@@ -251,7 +258,7 @@ const WeatherMain = () => {
 
 
                 <div>
-                    <div className='current-weather drop-shadow-2xl flex flex-col gap-3 p-8 rounded-2xl bg-white'>
+                    <div className='current-weather drop-shadow-2xl flex flex-col gap-3 p-8 rounded-2xl bg-white mt-4'>
                         <p>Today's Highlights</p>
                         <div className='flex md:flex-row flex-col gap-4'>
 
@@ -264,20 +271,20 @@ const WeatherMain = () => {
                                     <img src={wind} alt="" />
                                     <div className='flex flex-col items-center'>
                                         <p className='text-xs text-[#5e5d5d]'>PM25</p>
-                                        <p className=' text-xl'>15.3</p>
+                                        <p className=' text-xl'>{airQUality?.data?.list[0]?.components.pm2_5}</p>
                                     </div>
                                     <div className='flex flex-col items-center'>
                                         <p className='text-xs text-[#5e5d5d]'>SO2</p>
-                                        <p className=' text-xl'>15.3</p>
+                                        <p className=' text-xl'>{airQUality?.data?.list[0]?.components.so2}</p>
                                     </div>
                                     <div className='flex flex-col items-center'>
                                         <p className='text-xs text-[#5e5d5d]'>NO2</p>
-                                        <p className=' text-xl'>15.3</p>
+                                        <p className=' text-xl'>{airQUality?.data?.list[0]?.components.no2}</p>
                                     </div>
                                     <div className='flex flex-col items-center'>
                                         <p className='text-xs text-[#5e5d5d]'>O3</p>
-                                        <p className=' text-xl'>15.3</p>
-                                    </div>
+                                        <p className=' text-xl'>{airQUality?.data?.list[0]?.components.o3}</p>
+                                    </div> 
                                 </div>
                             </div>
 
@@ -300,7 +307,7 @@ const WeatherMain = () => {
                                         <p className=' text-lg'>6:00 PM</p>
                                     </div>
                                     </div> */}
-                                    <p className=' text-lg'>{weatherData.rain?.['1h']}mm </p>
+                                    <p className=' text-lg'>{weatherData.rain?.['1h'] ?? "0"} mm </p>
                                 </div>
                             </div>
                         </div>

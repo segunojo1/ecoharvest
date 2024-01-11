@@ -100,7 +100,7 @@ const SoilData = () => {
         }
     }
     return (
-        <div className='flex-[.8] md:ml-[234px] ml-0'>
+        <div className='flex-[.8] md:ml-[234px] ml-0 '>
             <Navbar />
             <div className='flex flex-col items-center p-[1.4rem] gap-5 h-[80vh]'>
                 <div className='flex items-center justify-between w-full mb-5 gap-3'>
@@ -125,7 +125,7 @@ const SoilData = () => {
                     <img src={page404} alt="" className='w-[300px] '/>
                     <p className=' text-[#696767] font-semibold'>No soil data found, input your farm location</p>
                 </div> */}
-                <div className='flex justify-center items-center w-[700px] gap-5'>
+                <div className='flex md:flex-row flex-col justify-center items-center md:w-[700px] gap-5'>
                     <p className='text-center font-semibold flex-[.5]'>Note: Soil data presented is for your current location, for more accurate results stand in the center of your farm.</p>
                     <div className='longline'></div>
                     <div className='flex-[.5]'>

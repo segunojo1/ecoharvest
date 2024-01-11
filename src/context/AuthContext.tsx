@@ -11,6 +11,7 @@ export const AuthProvider = ({children}: any) => {
     const [authUser, setAuthUser] = useState({});
 
     const [password, setPassword] = useState();
+    const [username, setUsername] = useState();
 
     const isAuthenticated = () => {
         return !!Cookies.get('refreshToken')
@@ -24,7 +25,9 @@ export const AuthProvider = ({children}: any) => {
         setError,
         isAuthenticated,
         authUser,
-        setAuthUser
+        setAuthUser,
+        username,
+        setUsername
     } 
   return (
     <AuthContext.Provider value={authStates}>

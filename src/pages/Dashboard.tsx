@@ -2,17 +2,22 @@ import React, { useContext, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import MainComp from '../components/MainComp';
 import AuthContext from '../context/AuthContext';
-import { onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, updateProfile } from 'firebase/auth';
 import { auth } from '../firebase';
 import agroweather from '../http/agroweather';
 import { toast } from 'react-toastify';
+import firebase from 'firebase/compat/app';
 
 const Dashboard = () => {
-    const { authUser, setAuthUser }: any = useContext(AuthContext)
+    const { authUser, setAuthUser, username }: any = useContext(AuthContext)
     //   const {user} = useContext(AuthContext);
     let latitude: number;
     let longitude: number;
 
+    const auth: any = getAuth();
+    const userr: any = auth.currentUser;
+
+    setAuthUser(userr);
 
     useEffect(() => {
         if (navigator.geolocation) {
@@ -83,24 +88,39 @@ const Dashboard = () => {
         //         toast.error("err creating polygon")
         //     }
         // }
-        const listen = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setAuthUser(user);
-            } else {
-                setAuthUser(null);
-            }
+
+        // const auth:any = getAuth();
+        // const user:any = auth.currentUser;
+        // updateProfile(auth.currentUser, {
+        //     displayName: username
+        // }) .then(() => {
+        //     setAuthUser(user);
+        //     console.log(user);
+            
+        // }) 
         })
+        // const listen = onAuthStateChanged(auth, (user) => {
+        //     if (user) {
+        //         setAuthUser(user);
+        //         authUser.displayName = username
+                
+        //         console.log(user);
+                 
+        //     } else {
+        //         setAuthUser(null);
+        //     }
+        // })
 
 
-        return () => {
-            listen();
-            setTimeout(() => {
+    //     return () => {
+    //         listen();
+    //         setTimeout(() => {
 
-                console.log(authUser);
-            }, 2000);
+    //             console.log(authUser);
+    //         }, 2000);
 
-        }
-    }, [])
+    //     }
+    // }, [])
     return (
         <div className='flex-[.8] md:ml-[234px] ml-0'>
             <Navbar />

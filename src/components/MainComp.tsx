@@ -90,7 +90,7 @@ const MainComp = () => {
                 <div className='flex items-center gap-[10px]'>
                     <img src={profile} alt="profile" className='' />
                     <div className='grid '>
-                        <h3 className=' font-medium text-2xl'>Hi, {authUser.email}!</h3>
+                        <h3 className=' font-medium text-2xl'>Hi, {authUser?.displayName}!</h3>
                         <div className='flex items-center gap-[10px]'>
                             <img src={sun} alt="sun" />
                             <img src={circle} alt="dot" />
@@ -120,7 +120,7 @@ const MainComp = () => {
                     <img src={next} alt="next" />
                 </div>
             </div>
-            <div className='flex md:flex-row flex-col mt-[3rem] items-center gap-[.6rem]'>
+            <div className='flex overflow-x-scroll mt-[3rem] items-center gap-[.6rem]'>
                 <Link to="/market">
                 
                 <div className='p-[.6rem] w-[230px] h-[300px] border-[1px] rounded-[16px] gap-[.3rem] flex flex-col justify-between border-[#D9D9D9] market'>
