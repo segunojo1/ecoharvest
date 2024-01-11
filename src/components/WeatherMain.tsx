@@ -197,7 +197,7 @@ const WeatherMain = () => {
 
             <div className='flex md:flex-row flex-col justify-between'>
                 <div>
-                    <div className='current-weather drop-shadow-2xl flex flex-col gap-3 p-8 rounded-2xl bg-white -z-50 '>
+                    <div className='current-weather drop-shadow-2xl flex flex-col gap-3 p-8 rounded-2xl bg-white z-0 '>
                         <p className='text-xl font-medium'>Now</p>
                         <div className='flex items-center gap-1'>
                             <h1 className='text-6xl font-semibold'>{Math.round(weatherData.main?.temp - 273)}°C</h1>

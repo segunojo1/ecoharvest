@@ -7,7 +7,6 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
     <AuthProvider>
       <App />
       <ToastContainer
@@ -23,5 +22,4 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         theme="light"
       />
     </AuthProvider>
-  </React.StrictMode>,
 )

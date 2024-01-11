@@ -4,8 +4,25 @@ import AuthContext from '../context/AuthContext';
 
 const Navbar = () => {
   const { authUser }: any = useContext(AuthContext);
-
   
+  const googleTranslateElementInit = () => {
+    new (window as any).google.translate.TranslateElement(
+      {
+        pageLanguage: "en",
+        autoDisplay: false
+      },
+      "google_translate_element"
+    );
+  };
+  useEffect(() => {
+    var addScript = document.createElement("script");
+    addScript.setAttribute(
+      "src",
+      "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    );
+    document.body.appendChild(addScript);
+    (window as any).googleTranslateElementInit = googleTranslateElementInit;
+  }, []);
   return (
     <div>
     <div className="head">

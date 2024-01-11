@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import profile from "../assets/profile.svg";
-import sun from "../assets/sun.svg";
+import sun from "../assets/sunsmall.svg";
 import circle from "../assets/circle.svg";
 import seedling from "../assets/seedling-solid.svg";
 import next from "../assets/next.svg";
@@ -90,7 +90,7 @@ const MainComp = () => {
                 <div className='flex items-center gap-[10px]'>
                     <img src={profile} alt="profile" className='' />
                     <div className='grid '>
-                        <h3 className=' font-medium text-2xl'>Hi, {authUser?.displayName}!</h3>
+                        <h3 className=' font-medium text-2xl'>Hi, Farmer {authUser?.displayName}!👨‍🌾</h3>
                         <div className='flex items-center gap-[10px]'>
                             <img src={sun} alt="sun" />
                             <img src={circle} alt="dot" />

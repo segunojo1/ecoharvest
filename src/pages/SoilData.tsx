@@ -7,22 +7,23 @@ import PolygonContext from '../context/PolygonContext'
 import weather from '../http/weather'
 import { Polygon } from '../@types'
 import { convertToCelsius } from '../helpers/converttocelsius'
+import { getAuth } from 'firebase/auth'
 
 const SoilData = () => {
 
-    const {polygons, setPolygons, location, setLocation}:any = useContext(PolygonContext);
-    const [polygonId, setPolygonId]:any = useState();
-    const [soilData, setSoilData]:any = useState();
+    const { polygons, setPolygons, location, setLocation }: any = useContext(PolygonContext);
+    const [polygonId, setPolygonId]: any = useState();
+    const [soilData, setSoilData]: any = useState();
     const [recommendation, setRecommendation] = useState('');
-    let longitude:any;
-    let latitude:any;
+    let longitude: any;
+    let latitude: any;
     useEffect(() => {
         const getLocationAndSoilData = async () => {
             const position = await getCurrentPosition();
             if (position) {
                 latitude = position.coords.latitude;
                 longitude = position.coords.longitude;
-    
+
                 const matchingPolygon = polygons.find((polygon: Polygon) => polygon.name === location[0]?.state);
                 if (matchingPolygon) {
                     setPolygonId(matchingPolygon.id);
@@ -37,13 +38,13 @@ const SoilData = () => {
         };
         getLocationAndSoilData();
 
-        
+
         // generateRecommendation(soilData)
     }, [polygons, location, recommendation])
 
-    useEffect(() => {
-        generateRecommendation(soilData)
-    }, soilData)
+    // useEffect(() => {
+    //     generateRecommendation(soilData)
+    // }, [])
 
     async function getCurrentPosition(): Promise<GeolocationPosition | null> {
         return new Promise((resolve) => {
@@ -57,48 +58,56 @@ const SoilData = () => {
             }
         });
     }
-    
+
     const getSoilData = async (polygonId: any) => {
         console.log(polygonId);
         try {
-            const {data} = await agroweather.get("/soil", {
-                params:{
+            const { data } = await agroweather.get("/soil", {
+                params: {
                     polyid: polygonId
                 }
             })
             setSoilData(data);
             // generateRecommendation(soilData)
         } catch (error) {
-            
+
         }
     }
 
-    const generateRecommendation = (soilData:any) => {
+    const generateRecommendation = (soilData: any) => {
         const surfaceTemp = soilData?.t0;
         const deepTemp = soilData?.t10;
         const soilMoisture = soilData?.moisture;
+        console.log(soilData);
+        let recommendation = "";
+        if (surfaceTemp) {
 
-        if (surfaceTemp && deepTemp && soilMoisture) {
-            
-            if (surfaceTemp > 301 ) {
-                setRecommendation("Surface temperature is too high. ")
+            if (surfaceTemp > 301) {
+                recommendation = "Surface temperature is too high. "
             }
             if (deepTemp > 303) {
-                setRecommendation(recommendation + "Deep temperature is too high. ")
+                recommendation += "Deep temperature is too high. "
             }
             if (soilMoisture < 0.3) {
-                setRecommendation(recommendation + "Soil moisture is too low. Irrigation is needed")
+                recommendation += "Soil moisture is too low. Irrigation is needed"
             }
             if (recommendation == "") {
-                setRecommendation("Soil conditions are generally okay")
+                recommendation += "Soil conditions are generally okay"
             }
 
-            // return recommendation;
+            return recommendation;
         }
-        else{
-            setRecommendation('Unable to provide recommendations. Missing soil data.')
+        else {
+            recommendation = 'Unable to provide recommendations. Missing soil data.'
         }
+        console.log("recommendation set");
+        console.log(recommendation);
+
+
     }
+        const auth: any = getAuth();
+        const userr: any = auth.currentUser;
+        console.log(userr);
     return (
         <div className='flex-[.8] md:ml-[234px] ml-0 '>
             <Navbar />
@@ -110,17 +119,17 @@ const SoilData = () => {
                             <img src={locatio} alt="location" />
                         </div>
                         <div className='relative'>
-                        <input type="text" className='md:min-w-[500px] md:w-fit w-full rounded-full p-4' placeholder='Please select your farm location to see soil data...' />
-                        <div className='text-center  weath absolute z-50 w-full bg-[white] rounded-xl hidden'>
-                            <p className='pt-2 bg-[#f3ead9] cursor-pointer'>Lagos, Nigeria.</p>
-                            <p className='pt-2'>Lagos, Nigeria.</p>
-                            <p className='pt-2'>Lagos, Nigeria.</p>
-                        </div>
+                            <input type="text" className='md:min-w-[500px] md:w-fit w-full rounded-full p-4' placeholder='Please select your farm location to see soil data...' />
+                            <div className='text-center  weath absolute z-50 w-full bg-[white] rounded-xl hidden'>
+                                <p className='pt-2 bg-[#f3ead9] cursor-pointer'>Lagos, Nigeria.</p>
+                                <p className='pt-2'>Lagos, Nigeria.</p>
+                                <p className='pt-2'>Lagos, Nigeria.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                    <p className='text-center font-semibold z-0 mb-10'>Note: Soil temperature and moisture are essential indices that allow you to adjust irrigation work and prevent crop roots damage.</p>
+                <p className='text-center font-semibold z-0 mb-10'>Note: Soil temperature and moisture are essential indices that allow you to adjust irrigation work and prevent crop roots damage.</p>
                 {/* <div className='flex flex-col items-center justify-center h-full gap-4'>
                     <img src={page404} alt="" className='w-[300px] '/>
                     <p className=' text-[#696767] font-semibold'>No soil data found, input your farm location</p>
@@ -136,9 +145,9 @@ const SoilData = () => {
                 </div>
 
                 <div className='mt-5'>
-                    <p className=' underline decoration-slice'>RECOMMENDATIONS</p>
+                    <p className=' underline decoration-slice'>INFERENCE</p>
                     <ul>
-                        <li>{recommendation}</li> 
+                        <li>{generateRecommendation(soilData)}</li>
                     </ul>
                 </div>
             </div>
