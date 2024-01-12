@@ -13,14 +13,14 @@ const SoilData = () => {
     const [setPolygonId]: any = useState();
     const [soilData, setSoilData]: any = useState();
     const [recommendation] = useState('');
-    let longitude: any;
-    let latitude: any;
+    // let longitude: any;
+    // let latitude: any;
     useEffect(() => {
         const getLocationAndSoilData = async () => {
             const position = await getCurrentPosition();
             if (position) {
-                latitude = position.coords.latitude;
-                longitude = position.coords.longitude;
+                // const latitude = position.coords.latitude;
+                // const longitude = position.coords.longitude;
 
                 const matchingPolygon = polygons.find((polygon: Polygon) => polygon.name === location[0]?.state);
                 if (matchingPolygon) {
