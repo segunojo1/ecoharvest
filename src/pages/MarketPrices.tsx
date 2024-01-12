@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import commodities from '../http/commodities';
-import { symbols } from '../helpers/symbols';
 import cropp from "../assets/pexels-pixabay-209831.jpg"
 
 const MarketPrices = () => {

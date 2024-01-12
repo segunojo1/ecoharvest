@@ -1,5 +1,4 @@
 import { createContext, useState } from "react";
-import { nav } from "../@types";
 
 const NavContext = createContext({});
 
