@@ -1,15 +1,15 @@
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import MainComp from '../components/MainComp';
 import AuthContext from '../context/AuthContext';
-import { getAuth, onAuthStateChanged, updateProfile } from 'firebase/auth';
-import { auth } from '../firebase';
-import agroweather from '../http/agroweather';
-import { toast } from 'react-toastify';
-import firebase from 'firebase/compat/app';
+import { getAuth } from 'firebase/auth';
+// import { auth } from '../firebase';
+// import agroweather from '../http/agroweather';
+// import { toast } from 'react-toastify';
+// import firebase from 'firebase/compat/app';
 
 const Dashboard = () => {
-    const { authUser, setAuthUser, username }: any = useContext(AuthContext)
+    const { setAuthUser }: any = useContext(AuthContext)
     //   const {user} = useContext(AuthContext);
     let latitude: number;
     let longitude: number;

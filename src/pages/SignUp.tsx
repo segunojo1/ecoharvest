@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword, getAuth, updateProfile } from 'firebase/auth';
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Header from '../components/Header';
 import { useContext } from 'react';
 import AuthContext from "../context/AuthContext"
@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 
 const SignUp = () => {
         const [loading, setLoading] = useState(false);
-        const { email, password, setEmail, setPassword, error, setError, username, setUsername, authUser, setAuthUser }: any = useContext(AuthContext);
+        const { email, password, setEmail, setPassword, setError, username, setUsername, setAuthUser }: any = useContext(AuthContext);
         // const { authUser, setAuthUser, username }: any = useContext(AuthContext)
         let available;
         const navigate = useNavigate();

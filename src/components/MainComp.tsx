@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import profile from "../assets/profile.svg";
 import sun from "../assets/sunsmall.svg";
 import circle from "../assets/circle.svg";
@@ -13,10 +13,10 @@ import { Link } from 'react-router-dom';
 const MainComp = () => {
     const { authUser }: any = useContext(AuthContext);
     const [day, setDay] = useState<string>(new Date().getDay().toString());
-    const [date, setDate] = useState<number>(new Date().getDate());
+    const [date] = useState<number>(new Date().getDate());
     const [month, setMonth] = useState<string>(new Date().getMonth().toString());
-    const [hour, setHour] = useState(new Date().getHours());
-    const [minutes, setMinutes] = useState(new Date().getMinutes());
+    const [hour] = useState(new Date().getHours());
+    const [minutes] = useState(new Date().getMinutes());
     if (hour >= 1) {
 
     }

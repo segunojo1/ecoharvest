@@ -1,20 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import locatio from "../assets/location.svg"
-import page404 from '../assets/pg4.svg'
 import agroweather from '../http/agroweather'
 import PolygonContext from '../context/PolygonContext'
-import weather from '../http/weather'
 import { Polygon } from '../@types'
 import { convertToCelsius } from '../helpers/converttocelsius'
 import { getAuth } from 'firebase/auth'
 
 const SoilData = () => {
 
-    const { polygons, setPolygons, location, setLocation }: any = useContext(PolygonContext);
-    const [polygonId, setPolygonId]: any = useState();
+    const { polygons, location }: any = useContext(PolygonContext);
+    const [setPolygonId]: any = useState();
     const [soilData, setSoilData]: any = useState();
-    const [recommendation, setRecommendation] = useState('');
+    const [recommendation] = useState('');
     let longitude: any;
     let latitude: any;
     useEffect(() => {

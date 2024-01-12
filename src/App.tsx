@@ -1,24 +1,22 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import './App.css'
-import Navbar from './components/Navbar'
 import Login from './pages/Login'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Dashboard from './pages/Dashboard'
 import PrivateRoute from './PrivateRoute'
 import SignUp from './pages/SignUp'
 import Sidebar from './components/Sidebar'
-import { ToastContainer } from 'react-toastify'
+import BottomNav from './components/BottomNav'
 import Weather from './pages/Weather'
 import Page404 from './pages/Page404'
 import NavContext, { NavProvider } from './context/NavContext'
-import { nav } from './@types'
 import MarketPrices from './pages/MarketPrices'
 import SoilData from './pages/SoilData'
 import { PolygonProvider } from './context/PolygonContext'
 import CropRecommendation from './pages/CropRecommendation'
 
 function App() {
-  const {activeNav, setActiveNav}:any= useContext(NavContext);
+  const {setActiveNav}:any= useContext(NavContext);
   const showSidebar = (e:any) => {
     e.target.classList.toggle("activenav")
     setActiveNav((prev:any) => !prev);
@@ -56,6 +54,7 @@ function App() {
                 <Sidebar />
                 <div className='ham' onClick={(e) => showSidebar(e)}></div>
                 <Dashboard />
+                <BottomNav />
               </div>
               </PolygonProvider>
             </NavProvider>
@@ -66,6 +65,7 @@ function App() {
               <div className="dashboard">
                 <Sidebar />
                 <Weather />
+                <BottomNav />
               </div>
             </PrivateRoute>
           } />
@@ -74,6 +74,7 @@ function App() {
               <div className="dashboard">
                 <Sidebar />
                 <MarketPrices />
+                <BottomNav />
               </div>
             </PrivateRoute>
           } />
@@ -83,6 +84,7 @@ function App() {
               <div className="dashboard">
                 <Sidebar />
                 <Dashboard />
+                <BottomNav />
               </div>
             </PrivateRoute>
           } />
@@ -92,6 +94,7 @@ function App() {
               <div className="dashboard">
                 <Sidebar />
                 <SoilData />
+                <BottomNav />
               </div>
               </PolygonProvider>
             </PrivateRoute>
@@ -101,6 +104,7 @@ function App() {
               <div className="dashboard">
                 <Sidebar />
                 <CropRecommendation />
+                <BottomNav />
               </div>
             </PrivateRoute>
           } />

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import AuthContext from '../context/AuthContext'
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import Cookies from 'js-cookie';
@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
-  const { email, setEmail, password, setPassword, error, setError }: any = useContext(AuthContext);
+  const { email, setEmail, password, setPassword, setError }: any = useContext(AuthContext);
   const navigate = useNavigate();
   let available;
 
@@ -38,7 +38,7 @@ const Login = () => {
       })
       .catch((error: any) => {
         setLoading(false);
-        const errorCode = error.code;
+        // const errorCode = error.code;
         const errorMessage = error.message;
         toast.error(errorMessage)
         // console.log(errorMessage, errorCode);

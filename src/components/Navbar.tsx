@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import profile from "../assets/profile.svg"
 import AuthContext from '../context/AuthContext';
 

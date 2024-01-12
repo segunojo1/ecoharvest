@@ -1,19 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import weath from "../assets/pexels-pixabay-209831.jpg"
+import { useEffect, useState } from 'react'
 import WeatherDetails from './WeatherDetails'
 import weather from '../http/weather'
 import agroweather from '../http/agroweather'
 import locatio from "../assets/location.svg"
 import calender from "../assets/date.svg"
 import location2 from "../assets/location2.svg"
-import sun from "../assets/sun.svg"
 import cloud2 from "../assets/cloud2.svg"
 import wind from '../assets/wind.svg'
-import sunset from "../assets/sunrise.svg"
-import sunrise from "../assets/moon.svg"
 import drop from "../assets/drop.svg"
 import pressure from "../assets/pressure.svg"
-import eye from "../assets/eye.svg"
 import temp from "../assets/temp.svg"
 import rain from "../assets/rain.svg"
 import { convertUtcToNormalDate } from '../helpers/convertutc'
@@ -44,11 +39,11 @@ const WeatherMain = () => {
     });
     const [location, setLocation]: any = useState();
     const [icon, setIcon]: any = useState();
-    const [loading, setLoading] = useState();
+    // const [loading, setLoading] = useState();
     const [forecast, setForecast]: any = useState([]);
     const [dayForecast, setDayForecast]: any = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
-    const [searchResults, setSearchResults] = useState();
+    // const [searchResults, setSearchResults] = useState();
     const [airQUality, setAirQuality]:any = useState();
 
     let latitude: number;

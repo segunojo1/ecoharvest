@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import logo from "../assets/logo.png"
-import dash from "../assets/dashboard.svg"
 import dropdown from "../assets/dropdown.svg"
+import dash from "../assets/dashboard.svg"
 import cloud from "../assets/cloud-inactive.svg"
 import market from "../assets/arrow-trend-up-solid.svg"
+import social from "../assets/social.svg"
 import messages from "../assets/messages.svg"
 import settings from "../assets/settings.svg"
-import social from "../assets/social.svg"
 import goals from "../assets/goals.png"
 import send from "../assets/send.svg"
 import ai from "../assets/chat.svg"
-import { Link, useLocation, useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import SideComp from './SideComp'
 import NavContext from '../context/NavContext'
 import OpenAI from 'openai'
@@ -24,7 +24,7 @@ const Sidebar = () => {
     const lastSegment = currentPath.substring(currentPath.lastIndexOf('/') + 1);
     // ****************side bar states*********************
     const [activeComponent, setActiveComponent] = useState(lastSegment);
-    const { activeNav, setActiveNav }: any = useContext(NavContext);
+    const { activeNav }: any = useContext(NavContext);
 
 
     // ****************OPENAI CONFIG*****************
@@ -60,9 +60,6 @@ const Sidebar = () => {
         console.log("click11");
     }
 
-    const setMess = () => {
-
-    }
 
     /**
      * sendMessage: handles sending prompt to openai
@@ -138,8 +135,11 @@ const Sidebar = () => {
                 <SideComp handleClick={() => handleClick("help")} isActive={activeComponent == "help"} component="help" icon={messages} text="Help" drop={null} />
 
 
-                {/* *****************CHAT BOT*********************/}
-                <div className={`${showChat ? 'bottom-0' : 'bottom-[-40rem]'} h-[80vh] w-[400px] absolute bg-slate-800 flex flex-col z-50 transition-all`}>
+               
+                <div className="longline"></div>
+            </div>
+             {/* *****************CHAT BOT*********************/}
+             <div className={`${showChat ? 'md:bottom-20 bottom-25' : 'bottom-[-40rem]'} h-[80vh] md:w-[400px] w-[300px] fixed bg-slate-800 flex flex-col z-50 transition-all left-[1rem]`}>
                     <div className='bg-[#c3f07a] p-4 flex gap-4 items-center'>
                         <div className='w-[50px] h-[50px] rounded-full bg-black'></div>
                         <div className='flex flex-col'>
@@ -176,9 +176,8 @@ const Sidebar = () => {
                         </button>
                     </form>
                 </div>
-                <div className="longline"></div>
-            </div>
-            <div className='flex items-center fixed  bottom-6 left-4 gap-2 mt-8 cursor-pointer' onClick={handleShowChat}>
+                
+            <div className='flex items-center fixed  md:bottom-6 bottom-16 left-4 gap-2 mt-8 cursor-pointer z-50' onClick={handleShowChat}>
                 <img src={ai} alt="chat with ai" className="w-[60px]" />
                 <p className='text-[#6E7390]'>Chat with AI</p>
             </div>

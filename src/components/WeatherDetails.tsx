@@ -1,4 +1,3 @@
-import React from 'react'
 
 const WeatherDetails = ({time, img, temp}: any) => {
   return (

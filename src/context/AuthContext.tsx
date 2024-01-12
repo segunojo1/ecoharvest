@@ -4,7 +4,6 @@ import Cookies from "js-cookie";
 const AuthContext = createContext({});
 
 export const AuthProvider = ({children}: any) => {
-    const [isLoggedIn, setIsLoggedIn] = useState();
     const [email, setEmail] = useState();
     const [error, setError] = useState();
 
