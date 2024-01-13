@@ -4,7 +4,7 @@ import rain from "../assets/rainsmall.svg"
 import sun from "../assets/sunsmall.svg"
 
 export function displayWeatherIcon(description: string): string {
-    const lowerDescription = description.toLowerCase();
+    const lowerDescription = description?.toLowerCase();
 
     if (lowerDescription.includes('clear')) {
         return sun; // Sunny

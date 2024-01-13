@@ -192,7 +192,7 @@ const WeatherMain = () => {
 
             <div className='flex md:flex-row flex-col justify-between'>
                 <div>
-                    <div className='current-weather drop-shadow-2xl flex flex-col gap-3 p-8 rounded-2xl bg-white z-0 '>
+                    <div className='current-weather drop-shadow-2xl flex flex-col gap-3 p-4 rounded-2xl bg-white z-0 '>
                         <p className='text-xl font-medium'>Now</p>
                         <div className='flex items-center gap-1'>
                             <h1 className='text-6xl font-semibold'>{Math.round(weatherData.main?.temp - 273)}°C</h1>
@@ -253,32 +253,32 @@ const WeatherMain = () => {
 
 
                 <div>
-                    <div className='current-weather drop-shadow-2xl flex flex-col gap-3 p-8 rounded-2xl bg-white mt-4'>
+                    <div className='current-weather drop-shadow-2xl flex flex-col gap-3 p-4 rounded-2xl bg-white mt-4'>
                         <p>Today's Highlights</p>
                         <div className='flex md:flex-row flex-col gap-4'>
 
-                            <div className='bg-[#eee8e0] p-6 flex-[.5] rounded-md'>
+                            <div className='bg-[#eee8e0] p-4 flex-[.5] rounded-md'>
                                 <div className='flex items-center justify-between mb-5'>
                                     <p>Air Quality Index</p>
-                                    <div className='p-2 bg-[#f1cfa2] w-fit rounded-full'>Moderate</div>
+                                    <div className='p-1 bg-[#f1cfa2] w-fit rounded-full'>Moderate</div>
                                 </div>
-                                <div className='flex justify-between items-center gap-4'>
+                                <div className='flex justify-between items-center gap-2'>
                                     <img src={wind} alt="" />
                                     <div className='flex flex-col items-center'>
                                         <p className='text-xs text-[#5e5d5d]'>PM25</p>
-                                        <p className=' text-xl'>{airQUality?.data?.list[0]?.components.pm2_5}</p>
+                                        <p className=' text-l'>{airQUality?.data?.list[0]?.components.pm2_5}</p>
                                     </div>
                                     <div className='flex flex-col items-center'>
                                         <p className='text-xs text-[#5e5d5d]'>SO2</p>
-                                        <p className=' text-xl'>{airQUality?.data?.list[0]?.components.so2}</p>
+                                        <p className=' text-l'>{airQUality?.data?.list[0]?.components.so2}</p>
                                     </div>
                                     <div className='flex flex-col items-center'>
                                         <p className='text-xs text-[#5e5d5d]'>NO2</p>
-                                        <p className=' text-xl'>{airQUality?.data?.list[0]?.components.no2}</p>
+                                        <p className=' text-l'>{airQUality?.data?.list[0]?.components.no2}</p>
                                     </div>
                                     <div className='flex flex-col items-center'>
                                         <p className='text-xs text-[#5e5d5d]'>O3</p>
-                                        <p className=' text-xl'>{airQUality?.data?.list[0]?.components.o3}</p>
+                                        <p className=' text-l'>{airQUality?.data?.list[0]?.components.o3}</p>
                                     </div> 
                                 </div>
                             </div>
@@ -309,28 +309,28 @@ const WeatherMain = () => {
                         <div className='flex md:flex-row flex-col justify-between gap-2'>
                             <div className='bg-[#eee8e0] p-4 rounded-md'>
                                 <p className='mb-5'>Humidity</p>
-                                <div className='flex justify-between items-center gap-8'>
+                                <div className='flex justify-between items-center gap-4'>
                                     <img src={drop} alt="" />
                                     <p className='text-xl'>{weatherData.main?.humidity}%</p>
                                 </div>
                             </div>
                             <div className='bg-[#eee8e0] p-4 rounded-md'>
                                 <p className='mb-5'>Pressure</p>
-                                <div className='flex justify-between items-center gap-8'>
+                                <div className='flex justify-between items-center gap-4'>
                                     <img src={pressure} alt="" />
                                     <p className='text-xl'>{weatherData.main?.pressure}hPa</p>
                                 </div>
                             </div>
                             <div className='bg-[#eee8e0] p-4 rounded-md'>
                                 <p className='mb-5'>Wind Speed</p>
-                                <div className='flex justify-between items-center gap-8'>
+                                <div className='flex justify-between items-center gap-4'>
                                     <img src={wind} alt="" />
                                     <p className='text-xl'>{weatherData.wind.speed} m/s</p>
                                 </div>
                             </div>
                             <div className='bg-[#eee8e0] p-4 rounded-md'>
                                 <p className='mb-5'>Feels Like</p>
-                                <div className='flex justify-between items-center gap-8'>
+                                <div className='flex justify-between items-center gap-4'>
                                     <img src={temp} alt="" />
                                     <p className='text-xl'>{Math.round(weatherData.main?.feels_like - 273)}°C</p>
                                 </div>
@@ -339,7 +339,7 @@ const WeatherMain = () => {
 
                     </div>
                     <p className=' font-semibold text-lg my-6'>Today at</p>
-                    <div className='grid grid-cols-3 gap-2 justify-between'>
+                    <div className='grid grid-cols-2 gap-2 justify-between'>
                         {/* {forecast?.map((fore:any) => {
                             if (fore == forecast[8]) {
                                 return;
