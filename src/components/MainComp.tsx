@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import profile from "../assets/profile.svg";
 import sun from "../assets/sunsmall.svg";
 import circle from "../assets/circle.svg";
@@ -8,10 +8,11 @@ import crops from "../assets/arrow.svg"
 import weather from "../assets/cloud.svg"
 import AuthContext from '../context/AuthContext';
 import { Link } from 'react-router-dom';
+import { getAuth, updateProfile } from 'firebase/auth';
 // import { AuthContext } from '../../context/AuthContext';
 
 const MainComp = () => {
-    const { authUser }: any = useContext(AuthContext);
+    const { authUser, setAuthUser, username }: any = useContext(AuthContext);
     const [day, setDay] = useState<string>(new Date().getDay().toString());
     const [date] = useState<number>(new Date().getDate());
     const [month, setMonth] = useState<string>(new Date().getMonth().toString());
@@ -83,6 +84,18 @@ const MainComp = () => {
         default:
             break;
     }
+
+    useEffect(() => {
+        const auth: any = getAuth();
+        const userr: any = auth.currentUser;
+        updateProfile(auth.currentUser, {
+            displayName: username
+    }).then(() => {
+            setAuthUser(userr);
+            console.log(userr);
+
+    })
+    }, [])
 
     return (
         <div className='p-[1.4rem] '>
