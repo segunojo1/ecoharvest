@@ -15,7 +15,7 @@ const MarketPrices = () => {
         const { data } = await commodities.get("/latest", {
           params: {
             base: "NGN",
-            symbols: "ALU,COFFEE,KC00,KCZ24,KCZ23,KCN25,KCN23,KCN24,KCH25,KCH23,KCH24"
+            symbols: "ALU,COFFEE,KCH24,BEEF,BRENTOIL,BUTTER,CANO,COCOA,CORN,COTTON,CPO,EGGS-US,MILK,METHANOL,OAT,POTATOES,RICE,RUBBER,SMQ24,SOYBEAN,SUGAR,TEA,WHEAT,WOOL"
           }
         })
         console.log(data.data);

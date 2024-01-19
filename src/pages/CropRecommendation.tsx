@@ -13,14 +13,16 @@ const CropRecommendation = () => {
         rainfall: '',
     });
     const [recommendedCrop, setRecommendedCrop] = useState('');
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
     }, [])
     const getPrediction = async () => {
         try {
+            setLoading(true);
             const {data} = await cropreccomendation.post("/crop-recommendation", soilDetails);
             console.log(data);
             setRecommendedCrop(data[0]['recommended crop'])
-            
+            setLoading(false);
         } catch (error) {
 
         }
@@ -96,7 +98,9 @@ const CropRecommendation = () => {
                     onClick={getPrediction}>SUBMIT</button>
                 </div>
                 <div className='flex items-center'>
-                   <p className='text-center text-2xl'>The Recommended crop to plant is ...<br /> <span className=' underline font-semibold'>{recommendedCrop}</span></p>  
+                   <p className='text-center text-2xl'>The Recommended crop to plant is ...<br /> {loading ? (<div id="preloader">
+                                        <div id="preloaderinner"></div>
+                                </div>) : (<span className=' underline font-semibold'>{recommendedCrop}</span>)}</p>
                 </div>
                 </div>
             </div>

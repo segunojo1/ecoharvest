@@ -10,7 +10,7 @@ import { getAuth } from 'firebase/auth'
 const SoilData = () => {
 
     const { polygons, location }: any = useContext(PolygonContext);
-    const [setPolygonId]: any = useState();
+    const [polygonId, setPolygonId]: any = useState();
     const [soilData, setSoilData]: any = useState();
     const [recommendation] = useState('');
     // let longitude: any;
@@ -25,7 +25,7 @@ const SoilData = () => {
                 const matchingPolygon = polygons.find((polygon: Polygon) => polygon.name === location[0]?.state);
                 if (matchingPolygon) {
                     setPolygonId(matchingPolygon.id);
-                    console.log(matchingPolygon.id);
+                    console.log(polygonId);
                     await getSoilData(matchingPolygon.id);
                 } else {
                     console.log('Polygon not found');
